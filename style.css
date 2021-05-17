@@ -150,7 +150,7 @@ nav {
   align-items: center;
 }
 
-#removeFilters {
+.reset-button {
   height: fit-content;
   position: absolute;
   left: 50%;
@@ -160,11 +160,15 @@ nav {
   background: #d3573c;
   color: #fafafa;
 }
-#removeFilters:hover {
+.reset-button:hover {
   background: #911c1c;
 }
 
-button {
+button,
+.btn-modal,
+.btn-submit,
+.filters {
+  font-family: "DM Sans", sans-serif;
   cursor: pointer;
   color: #911c1c;
   background: none;
@@ -172,8 +176,17 @@ button {
   box-sizing: content-box;
   border-radius: 11px;
   margin: 2px;
+  padding: 2px 5px;
+  text-decoration: none;
+  font-size: 12px;
 }
-button:hover, button:focus {
+button:hover, button:focus,
+.btn-modal:hover,
+.btn-submit:hover,
+.btn-modal:focus,
+.btn-submit:focus,
+.filters:hover,
+.filters:focus {
   color: #fafafa;
   background: #911c1c;
 }
@@ -214,7 +227,6 @@ button:hover, button:focus {
   transform: scale(0.9);
 }
 .photographerCard * {
-  margin: auto;
   text-align: center;
 }
 .photographerCard h2 {
@@ -239,8 +251,6 @@ button:hover, button:focus {
 }
 
 .profilpic {
-  min-width: 200px;
-  min-height: 200px;
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -350,7 +360,7 @@ body {
   color: #d3573c;
 }
 
-#btn-modal,
+.btn-modal, .btn-submit,
 select {
   min-width: 170px;
   height: 70px;
@@ -397,6 +407,107 @@ select {
 #photo {
   display: flex;
   flex-wrap: wrap;
+}
+
+.hidden {
+  display: none;
+}
+
+.contact-form {
+  background: #db8876;
+  padding: 1% 2%;
+  border-radius: 5px;
+  z-index: 99;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.contact-form h1 {
+  font-size: 64px;
+  line-height: 83px;
+}
+
+label {
+  font-size: 36px;
+  line-height: 47px;
+}
+
+.text-control {
+  width: 600px;
+  line-height: 48px;
+}
+
+#croix {
+  text-decoration: none;
+}
+
+#close-modal {
+  text-decoration: none;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.btn-submit {
+  border: none;
+  margin: 10px 0 20px 0;
+}
+
+@media screen and (max-width: 480px) {
+  header {
+    height: initial;
+  }
+
+  #profil {
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  #contact h1 {
+    font-size: 36px;
+    line-height: initial;
+  }
+
+  #description h3,
+#description h4 {
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  #btn-modal {
+    position: fixed;
+    left: 50%;
+    bottom: 5%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    height: initial;
+  }
+
+  .profilpic {
+    width: 100px;
+    height: 100px;
+  }
+
+  #tags {
+    margin: 15px 0 0 0;
+  }
+  #tags a {
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  #trier {
+    display: none;
+  }
+
+  .media {
+    margin: 0;
+    height: 190px;
+    width: 100%;
+  }
 }
 
 /*# sourceMappingURL=style.css.map */

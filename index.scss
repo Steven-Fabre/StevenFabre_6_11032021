@@ -28,7 +28,10 @@ nav {
   }
 }
 
-button {
+button,
+.btn-modal,
+.filters {
+  font-family: "DM Sans", sans-serif;
   cursor: pointer;
   color: $first-color;
   background: none;
@@ -36,6 +39,9 @@ button {
   box-sizing: content-box;
   border-radius: 11px;
   margin: 2px;
+  padding: 2px 5px;
+  text-decoration: none;
+  font-size: 12px;
   &:hover,
   &:focus {
     color: $fourth-color;
@@ -79,7 +85,6 @@ button {
     }
   }
   * {
-    margin: auto;
     text-align: center;
   }
 
@@ -109,8 +114,6 @@ button {
 }
 
 .profilpic {
-  min-width: 200px;
-  min-height: 200px;
   width: 200px;
   height: 200px;
   object-fit: cover;

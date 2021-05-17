@@ -6,7 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>FishEye</title>
     <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="viewport"
+      content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height"
+    />
     <link rel="preconnect" href="https://fonts.gstatic.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400&display=swap"
@@ -31,6 +34,59 @@
       </button>
     </header>
     <main>
+      <div id="modal" class="contact-form hidden">
+        <h1>Contactez-moi</h1>
+        <h1 class="modalname"></h1>
+        <button class="toggle-modal" id="close-modal">
+          <img id="croix" src="img/croix.png" alt="Croix de fermeture" />
+        </button>
+        <form id="reserve" name="reserve" action="index.html" method="get">
+          <div class="formData">
+            <label>Prénom</label><br />
+            <input
+              class="text-control"
+              type="text"
+              id="first"
+              name="first"
+            /><br />
+          </div>
+          <div class="formData">
+            <label>Nom</label><br />
+            <input
+              class="text-control"
+              type="text"
+              id="last"
+              name="last"
+            /><br />
+          </div>
+          <div class="formData">
+            <label>E-mail</label><br />
+            <input
+              class="text-control"
+              type="email"
+              id="email"
+              name="email"
+            /><br />
+          </div>
+          <div class="formData">
+            <label>Votre message</label><br />
+            <textarea
+              id="message"
+              class="text-control"
+              name="message"
+              cols="40"
+              rows="4"
+            ></textarea
+            ><br />
+          </div>
+          <input
+            class="btn-submit"
+            type="submit"
+            class="button"
+            value="Envoyer"
+          />
+        </form>
+      </div>
       <article id="profil"></article>
       <div id="trier">
         <label for="trier-par">Trier par</label>

@@ -1,0 +1,55 @@
+@media screen and (max-width: 480px) {
+  header {
+    height: initial;
+  }
+  #profil {
+    padding: 0;
+    margin: 20px 0;
+  }
+
+  #contact {
+    h1 {
+      font-size: 36px;
+      line-height: initial;
+    }
+  }
+
+  #description {
+    h3,
+    h4 {
+      font-size: 13px;
+      line-height: 17px;
+    }
+  }
+  #btn-modal {
+    position: fixed;
+    left: 50%;
+    bottom: 5%;
+    transform: translate(-50%, -50%);
+    font-size: 18px;
+    height: initial;
+  }
+
+  .profilpic {
+    width: 100px;
+    height: 100px;
+  }
+
+  #tags {
+    margin: 15px 0 0 0;
+    a {
+      font-size: 13px;
+      line-height: 17px;
+    }
+  }
+
+  #trier {
+    display: none;
+  }
+
+  .media {
+    margin: 0;
+    height: 190px;
+    width: 100%;
+  }
+}

@@ -43,7 +43,7 @@ body {
     color: $second-color;
   }
 }
-#btn-modal,
+.btn-modal,
 select {
   min-width: 170px;
   height: 70px;
@@ -90,4 +90,52 @@ select {
 #photo {
   display: flex;
   flex-wrap: wrap;
+}
+
+// MODAL
+
+.hidden {
+  display: none;
+}
+
+.contact-form {
+  background: #db8876;
+  padding: 1% 2%;
+  border-radius: 5px;
+  z-index: 99;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  h1 {
+    font-size: 64px;
+    line-height: 83px;
+  }
+}
+
+label {
+  font-size: 36px;
+  line-height: 47px;
+}
+.text-control {
+  width: 600px;
+  line-height: 48px;
+}
+#croix {
+  text-decoration: none;
+}
+
+#close-modal {
+  text-decoration: none;
+  background: none;
+  border: none;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+.btn-submit {
+  @extend .btn-modal;
+  border: none;
+  margin: 10px 0 20px 0;
 }

@@ -28,6 +28,8 @@ fetch("./data.json")
     insertElement("h1", `${currentPhotographer.name}`, "contact");
     createHTML("button", "btn-modal", "contact");
     let btnModal = document.getElementById("btn-modal");
+    btnModal.classList.add("btn-modal");
+    btnModal.classList.add("toggle-modal");
     btnModal.innerHTML = "Contactez-moi";
     insertElement(
       "h3",
@@ -38,20 +40,24 @@ fetch("./data.json")
     // Création des tags
     createHTML("div", `tags`, "description");
     for (let tag in currentPhotographer.tags) {
-      let tagBtn = document.createElement("button");
+      let tagBtn = document.createElement("a");
       document.getElementById("tags").appendChild(tagBtn);
       tagBtn.setAttribute(`value`, `${currentPhotographer.tags[tag]}`);
+      tagBtn.setAttribute(
+        "href",
+        `index.html#${currentPhotographer.tags[tag]}`
+      );
       tagBtn.setAttribute("class", `filters`);
       tagBtn.innerHTML = `#${currentPhotographer.tags[tag]}`;
     }
-    // createHTML("img", `profilpic`, "description");
-    // let profilPic = document.getElementById("profilpic");
     document
       .getElementById("description")
       .insertAdjacentHTML(
         "afterend",
         `<img class="profilpic" src="./img/IDPhotos/${currentPhotographer.portrait}">`
       );
+    let modalName = document.querySelector(".modalname");
+    modalName.textContent = `${currentPhotographer.name}`;
 
     // _______________ Afficher les photos __________
 
@@ -82,5 +88,12 @@ fetch("./data.json")
         }
         console.log(currentMedia);
       }
+    }
+    // OPEN AND CLOSE CONTACT MODAL
+    let modalOpener = document.querySelectorAll(".toggle-modal");
+    let modal = document.getElementById("modal");
+    modalOpener.forEach((btn) => btn.addEventListener("click", toggleModal));
+    function toggleModal() {
+      modal.classList.toggle("hidden");
     }
   });
