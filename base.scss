@@ -1,0 +1,14 @@
+@import "reset.scss";
+$first-color: #911c1c;
+$second-color: #d3573c;
+$third-color: #525252;
+$fourth-color: #fafafa;
+$img-background: #c4c4c4;
+
+* {
+  font-family: "DM Sans", sans-serif;
+}
+
+@import "index.scss";
+@import "indexresponsive";
+@import "photographer.scss";

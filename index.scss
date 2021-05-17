@@ -1,0 +1,136 @@
+body {
+  margin: 0;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  height: 150px;
+  justify-content: space-around;
+  margin-top: 42px;
+}
+
+nav {
+  line-height: 36px;
+  align-items: center;
+}
+
+.reset-button {
+  height: fit-content;
+  position: absolute;
+  left: 50%;
+  top: 150px;
+  transform: translate(-50%, -50%);
+  font-size: 25px;
+  background: $second-color;
+  color: $fourth-color;
+  &:hover {
+    background: $first-color;
+  }
+}
+
+button {
+  cursor: pointer;
+  color: $first-color;
+  background: none;
+  border: 0.5px solid #c4c4c4;
+  box-sizing: content-box;
+  border-radius: 11px;
+  margin: 2px;
+  &:hover,
+  &:focus {
+    color: $fourth-color;
+    background: $first-color;
+  }
+}
+
+#title {
+  color: $first-color;
+  font-size: 36px;
+}
+
+#resultDiv {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-around;
+}
+
+.photographerCard {
+  margin: 40px;
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  max-width: 500px;
+  opacity: 1;
+  -webkit-transition: opacity 0.4s ease-in;
+  -moz-transition: opacity 0.4s ease-in;
+  -o-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
+  a {
+    text-decoration: none;
+    transition: all 400ms;
+  }
+
+  a:hover {
+    filter: brightness(0.8);
+    img {
+      transition: all 400ms;
+      transform: scale(0.9);
+    }
+  }
+  * {
+    margin: auto;
+    text-align: center;
+  }
+
+  h2 {
+    color: $second-color;
+    font-size: 36px;
+    line-height: 47px;
+  }
+
+  p {
+    font-size: 10px;
+    line-height: 13px;
+    margin: 2px;
+  }
+
+  p:first-of-type {
+    color: $first-color;
+    font-size: 13px;
+    line-height: 17px;
+  }
+
+  p:last-of-type {
+    color: $third-color;
+    font-size: 9px;
+    line-height: 12px;
+  }
+}
+
+.profilpic {
+  min-width: 200px;
+  min-height: 200px;
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.hideCard {
+  opacity: 0;
+  max-width: 0;
+  min-width: 0;
+  max-height: 0;
+  margin: 0;
+  z-index: -2;
+  -webkit-transition: opacity 0.4s ease-in;
+  -moz-transition: opacity 0.4s ease-in;
+  -o-transition: opacity 0.4s ease-in;
+  transition: opacity 0.4s ease-in;
+  * {
+    opacity: 0;
+    max-width: 0;
+    max-height: 0;
+  }
+}

@@ -1,0 +1,37 @@
+@media screen and (max-width: 480px) {
+  #logo {
+    img {
+      width: 150px;
+      height: 37.5px;
+      vertical-align: middle;
+      line-height: 50px;
+    }
+  }
+
+  #title {
+    font-size: 14px;
+    vertical-align: middle;
+    line-height: 50px;
+  }
+  nav {
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  #removeFilters {
+    top: 200px;
+  }
+}
+@media screen and (max-width: 1057px) {
+  #title {
+    order: 1;
+  }
+  nav {
+    order: 2;
+  }
+  .photographerCard {
+    min-width: 200px;
+  }
+}

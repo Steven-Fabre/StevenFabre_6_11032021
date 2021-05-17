@@ -1,0 +1,93 @@
+body {
+  width: 90%;
+  margin: auto;
+}
+
+#photographerHeader {
+  justify-content: initial;
+}
+
+#profil {
+  display: flex;
+  justify-content: space-between;
+  background-color: $fourth-color;
+  border-radius: 5px;
+  padding: 25px;
+  max-width: 1920px;
+}
+
+#description {
+  min-width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  h3 {
+    font-size: 24px;
+    line-height: 31px;
+    color: $first-color;
+  }
+  h4 {
+    font-size: 18px;
+    line-height: 23px;
+    color: #525252;
+  }
+}
+
+#contact {
+  display: flex;
+  justify-content: space-between;
+  h1 {
+    font-size: 64px;
+    line-height: 83px;
+    margin-right: 10px;
+    color: $second-color;
+  }
+}
+#btn-modal,
+select {
+  min-width: 170px;
+  height: 70px;
+  justify-content: center;
+  font-size: 20px;
+  line-height: 26px;
+  display: block;
+  background-color: $first-color;
+  color: $fourth-color;
+  box-sizing: border-box;
+  margin: 5px;
+  border-radius: 5px;
+}
+
+select {
+  padding: 15px;
+  appearance: none;
+  outline: none;
+  border: none;
+}
+
+#trier {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+  width: fit-content;
+}
+
+#arrow {
+  position: absolute;
+  top: 34px;
+  right: 25px;
+}
+
+.media {
+  width: 350px;
+  height: 300px;
+  border-radius: 5px;
+  object-fit: cover;
+  margin: 30px;
+}
+
+#photo {
+  display: flex;
+  flex-wrap: wrap;
+}
