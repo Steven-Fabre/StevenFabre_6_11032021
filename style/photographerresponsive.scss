@@ -1,4 +1,4 @@
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 1000px) {
   header {
     height: initial;
   }
@@ -51,5 +51,15 @@
     margin: 0;
     height: 190px;
     width: 100%;
+  }
+
+  #return {
+    display: none;
+  }
+
+  .filters {
+    font-size: 12px;
+    line-height: 16px;
+    padding: 0 5px;
   }
 }

@@ -7,6 +7,7 @@ fetch("./js/data.json")
     let mediaArray = data.media;
     let currentPhotographer;
     let currentMedia;
+
     for (let i in photographersArray) {
       if (photographersArray[i].id == idPage) {
         currentPhotographer = photographersArray[i];
@@ -79,6 +80,7 @@ fetch("./js/data.json")
           let src = document.getElementById(currentMedia.id);
           let img = document.createElement("img");
           img.classList.add("media");
+          img.setAttribute("alt", `${currentMedia.title}`);
           img.src = `./img/${folderName}/${currentMedia.image}`;
           src.appendChild(img);
         }
@@ -86,6 +88,7 @@ fetch("./js/data.json")
           let img = document.createElement("video");
           img.setAttribute("src", `./img/${folderName}/${currentMedia.video}`);
           img.classList.add("media");
+          img.setAttribute("title", `${currentMedia.title}`);
           let src = document.getElementById(currentMedia.id);
           src.appendChild(img);
         }
@@ -135,8 +138,10 @@ fetch("./js/data.json")
     let closeViewer = document.getElementById("croixviewer");
     let container = document.getElementById("container");
     let images = document.querySelectorAll(".media");
+    let precedent = document.getElementById("flechegauche");
+    let suivant = document.getElementById("flechedroite");
     images.forEach((image) => {
-      image.addEventListener("click", (e) => {
+      image.addEventListener("click", function setViewer(e) {
         container.classList.add("active");
         let img = document.createElement("img");
         img.src = image.src;
@@ -145,7 +150,11 @@ fetch("./js/data.json")
           viewer.removeChild(viewer.firstChild);
         }
         if (image.tagName == "IMG") {
-          viewer.appendChild(img);
+          viewer.insertAdjacentHTML(
+            "beforeend",
+            `<img src=${image.src} alt=${image.alt}>
+         <p>${image.alt}</p>`
+          );
         }
         if (image.tagName == "VIDEO") {
           viewer.insertAdjacentHTML(
@@ -153,14 +162,19 @@ fetch("./js/data.json")
             `<video src=${image.src} id='videoPlayer' controls="controls">
             <source id='mp4Source' src="movie.mp4" type="video/mp4" />
             <source id='oggSource' src="movie.ogg" type="video/ogg" />
-         </video>`
+         </video>
+         <p>${image.title}</p>`
           );
         }
       });
     });
+    // Fermer le viewer
     closeViewer.addEventListener("click", (e) => {
-      // Fermer le viewer
-
       container.classList.remove("active");
+    });
+    // Ecoute des boutons
+    document.addEventListener("keydown", (e) => {
+      if (e.code == "Escape")
+        container.classList.remove("active"), modal.classList.add("hidden");
     });
   });

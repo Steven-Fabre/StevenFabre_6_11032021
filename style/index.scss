@@ -14,15 +14,15 @@ nav {
   align-items: center;
 }
 
-.reset-button {
+#return {
   height: fit-content;
-  position: absolute;
+  position: fixed;
   left: 50%;
-  top: 150px;
+  top: 50px;
   transform: translate(-50%, -50%);
   font-size: 25px;
-  background: $second-color;
-  color: $fourth-color;
+  background: #db8876;
+  color: black;
   &:hover {
     background: $first-color;
   }
@@ -136,4 +136,9 @@ button,
     max-width: 0;
     max-height: 0;
   }
+}
+
+.hidden {
+  // WITHOUT TRANSITION
+  display: none;
 }
