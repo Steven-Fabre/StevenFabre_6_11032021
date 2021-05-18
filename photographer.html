@@ -15,9 +15,14 @@
       href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,700;1,400&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/984b353dcf.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="style/style.css" />
     <link rel="icon" type="image/svg" href="img/logo/logo.svg" />
-    <script type="text/javascript" src="scriptphotographer.js"></script>
+    <script type="text/javascript" src="js/scriptphotographer.js"></script>
+    <script type="text/javascript" src="js/carousel.js" async></script>
     <link type="text/javascript" id="json" rel="json" href="data.json" />
   </head>
   <body>
@@ -26,7 +31,18 @@
 
       <button
         id="removeFilters"
-        class="filters animals events travel sport fashion art portrait architecture hideCard"
+        class="
+          filters
+          animals
+          events
+          travel
+          sport
+          fashion
+          art
+          portrait
+          architecture
+          hideCard
+        "
         value="photographerCard"
         alt="Réinitialiser les filtres"
       >
@@ -96,6 +112,24 @@
           <option value="titre">Titre</option>
         </select>
         <img id="arrow" alt="fleche" src="img/arrow.png" />
+      </div>
+      <div id="container">
+        <img
+          id="croixviewer"
+          src="img/croixrouge.png"
+          alt="Croix de fermeture"
+        />
+        <img
+          id="flechegauche"
+          src="img/flechegauche.png"
+          alt="image précédente"
+        />
+        <img
+          id="flechedroite"
+          src="img/flechedroite.png"
+          alt="image suivante"
+        />
+        <div id="viewer"></div>
       </div>
       <article id="photo"></article>
     </main>

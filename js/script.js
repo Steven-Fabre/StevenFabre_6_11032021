@@ -3,7 +3,7 @@ let newStrong = document.createElement("strong");
 let newLink = document.createElement("a");
 
 // Récupère les données du fichier JSON
-fetch("./data.json")
+fetch("./js/data.json")
   .then((resp) => resp.json())
   .then(function display(data) {
     let photographersArray = data.photographers;

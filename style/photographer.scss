@@ -82,9 +82,16 @@ select {
 .media {
   width: 350px;
   height: 300px;
-  border-radius: 5px;
   object-fit: cover;
+  border-radius: 5px;
+}
+
+.mediaCard {
+  display: flex;
+  flex-direction: column;
+  width: 350px;
   margin: 30px;
+  cursor: pointer;
 }
 
 #photo {
@@ -92,6 +99,24 @@ select {
   flex-wrap: wrap;
 }
 
+.photoDescription {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  * {
+    color: $first-color;
+    font-size: 24px;
+    line-height: 31px;
+  }
+}
+
+.likesCount {
+  display: flex;
+}
+
+i {
+  margin: 0 3px;
+}
 // MODAL
 
 .hidden {
@@ -102,7 +127,7 @@ select {
   background: #db8876;
   padding: 1% 2%;
   border-radius: 5px;
-  z-index: 99;
+  z-index: 50;
   position: absolute;
   top: 50%;
   left: 50%;
@@ -114,6 +139,11 @@ select {
 }
 
 label {
+  font-size: 36px;
+  line-height: 47px;
+}
+input,
+textarea {
   font-size: 36px;
   line-height: 47px;
 }
@@ -138,4 +168,68 @@ label {
   @extend .btn-modal;
   border: none;
   margin: 10px 0 20px 0;
+}
+
+// CAROUSEL
+#container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: none;
+  img {
+    cursor: pointer;
+  }
+  video {
+    max-height: 80%;
+    max-width: 80%;
+  }
+}
+
+#croixviewer,
+#flechegauche,
+#flechedroite {
+  z-index: 999;
+  color: red;
+  position: fixed;
+}
+
+#croixviewer {
+  top: 50px;
+  right: 50px;
+}
+
+#flechegauche {
+  top: 50%;
+  left: 50px;
+}
+
+#flechedroite {
+  top: 50%;
+  right: 50px;
+}
+
+#container.active {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#viewer {
+  display: flex;
+  background-color: rgb(255, 255, 255);
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: cover;
+    border-radius: 5px;
+  }
 }

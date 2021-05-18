@@ -1,4 +1,5 @@
-fetch("./data.json")
+"use strict";
+fetch("./js/data.json")
   .then((resp) => resp.json())
   .then(function (data) {
     let idPage = window.location.hash.substring(1);
@@ -72,11 +73,13 @@ fetch("./data.json")
       if (mediaArray[i].photographerId == idPage) {
         currentMedia = mediaArray[i];
         createHTML("div", `${currentMedia.id}`, "photo");
+        let photoDiv = document.getElementById(`${currentMedia.id}`);
+        photoDiv.setAttribute("class", "mediaCard");
         if (currentMedia.image) {
-          let img = document.createElement("img");
-          img.src = `./img/${folderName}/${currentMedia.image}`;
-          img.classList.add("media");
           let src = document.getElementById(currentMedia.id);
+          let img = document.createElement("img");
+          img.classList.add("media");
+          img.src = `./img/${folderName}/${currentMedia.image}`;
           src.appendChild(img);
         }
         if (currentMedia.video) {
@@ -86,7 +89,37 @@ fetch("./data.json")
           let src = document.getElementById(currentMedia.id);
           src.appendChild(img);
         }
-        console.log(currentMedia);
+        // DESCRIPTION DE LA PHOTO
+        createHTML(
+          "div",
+          `photodescription${currentMedia.id}`,
+          `${currentMedia.id}`
+        );
+        let photoDescription = document.getElementById(
+          `photodescription${currentMedia.id}`
+        );
+        photoDescription.setAttribute("class", "photoDescription");
+
+        insertElement(
+          "p",
+          `${currentMedia.title}`,
+          `photodescription${currentMedia.id}`
+        );
+        // Creation des likes
+        createHTML(
+          "div",
+          `like${currentMedia.id}`,
+          `photodescription${currentMedia.id}`
+        );
+        insertElement("p", `${currentMedia.likes}`, `like${currentMedia.id}`);
+        let likes = document.getElementById(`like${currentMedia.id}`);
+        likes.setAttribute("class", "likesCount");
+        likes.insertAdjacentHTML(
+          "beforeend",
+          `<i class="fas fa-heart" aria-label="likes"></i>`
+        );
+
+        // console.log(currentMedia);
       }
     }
     // OPEN AND CLOSE CONTACT MODAL
@@ -96,4 +129,38 @@ fetch("./data.json")
     function toggleModal() {
       modal.classList.toggle("hidden");
     }
+
+    // Carousel d'image
+    let viewer = document.getElementById("viewer");
+    let closeViewer = document.getElementById("croixviewer");
+    let container = document.getElementById("container");
+    let images = document.querySelectorAll(".media");
+    images.forEach((image) => {
+      image.addEventListener("click", (e) => {
+        container.classList.add("active");
+        let img = document.createElement("img");
+        img.src = image.src;
+        // ENLEVER L'image du viewer si il y en a une
+        while (viewer.firstChild) {
+          viewer.removeChild(viewer.firstChild);
+        }
+        if (image.tagName == "IMG") {
+          viewer.appendChild(img);
+        }
+        if (image.tagName == "VIDEO") {
+          viewer.insertAdjacentHTML(
+            "beforeend",
+            `<video src=${image.src} id='videoPlayer' controls="controls">
+            <source id='mp4Source' src="movie.mp4" type="video/mp4" />
+            <source id='oggSource' src="movie.ogg" type="video/ogg" />
+         </video>`
+          );
+        }
+      });
+    });
+    closeViewer.addEventListener("click", (e) => {
+      // Fermer le viewer
+
+      container.classList.remove("active");
+    });
   });
