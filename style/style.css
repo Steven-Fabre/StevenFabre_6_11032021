@@ -563,6 +563,24 @@ textarea {
   color: #911c1c;
 }
 
+.footer {
+  position: fixed;
+  display: flex;
+  bottom: 0;
+  right: 15px;
+  background: #db8876;
+  border-radius: 5px 5px 0 0;
+  width: 370px;
+  justify-content: space-around;
+  padding: 15px;
+}
+.footer p {
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 31px;
+  text-align: right;
+}
+
 @media screen and (max-width: 1000px) {
   header {
     height: initial;

@@ -31,7 +31,13 @@ fetch("./js/data.json")
         parentDiv.appendChild(element);
       }
       //Crée une Div avec le nom du photographe
-      createDiv("article", "class", `photographerCard`, `${i.name}`, resultDiv);
+      createDiv(
+        "article",
+        "class",
+        `photographerCard mediaCard`,
+        `${i.name}`,
+        resultDiv
+      );
       let nameDiv = document.getElementById(i.name);
       let name = document.createElement("h2");
       name.innerHTML = `${i.name}`;
@@ -75,9 +81,9 @@ function hashChange() {
     let cards = document.getElementsByClassName("photographerCard");
     for (let card of cards) {
       if (card.classList.contains(`${linkFilter}`)) {
-        card.classList.remove("hideCard");
+        card.classList.remove("hidden");
       } else {
-        card.classList.add("hideCard");
+        card.classList.add("hidden");
       }
     }
   }

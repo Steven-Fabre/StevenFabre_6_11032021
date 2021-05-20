@@ -1,21 +1,30 @@
 "use strict";
+
+// POUR LE SCROLL
+
 let lastScrollTop = 0;
 let returnButton = document.getElementById("return");
+let mediaCard = document.getElementsByClassName("mediaCard");
 window.addEventListener(
   "scroll",
   function () {
-    let st = window.pageYOffset || document.documentElement.scrollTop; // Credits: "https://github.com/qeremy/so/blob/master/so.dom.js#L426"
-    if (st > lastScrollTop) {
+    let scrolling = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrolling || 0) {
       returnButton.classList.remove("hidden");
     } else {
       returnButton.classList.add("hidden");
     }
-    lastScrollTop = st <= 0 ? 0 : st;
   },
   false
 );
 
+// Bouton de reset
+
 returnButton.addEventListener("click", function () {
   window.pageYOffset = 0;
   document.documentElement.scrollTop = 0;
+  for (let card of mediaCard) {
+    card.classList.remove("hidden");
+  }
+  returnButton.classList.add("hidden");
 });
