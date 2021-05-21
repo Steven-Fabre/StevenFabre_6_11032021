@@ -251,10 +251,27 @@ textarea {
   width: 370px;
   justify-content: space-around;
   padding: 15px;
+  div {
+    display: flex;
+    p {
+      font-weight: 500;
+      font-size: 24px;
+      line-height: 31px;
+      text-align: right;
+    }
+  }
   p {
     font-weight: 500;
     font-size: 24px;
     line-height: 31px;
     text-align: right;
+  }
+}
+
+.loved {
+  i {
+    transition: all 400ms;
+    transform: scale(1.1);
+    color: green;
   }
 }

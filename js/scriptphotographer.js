@@ -8,8 +8,10 @@ fetch("./js/data.json")
     let mediaArray = data.media;
     let currentPhotographer;
     let currentMedia;
+    let currentMediaList = [];
+    let photoArticle = document.getElementById("photo");
+
     // Compteur de likes
-    let likesCount = document.querySelectorAll(".likesCount");
     let likesTotal = 0;
 
     for (let i in photographersArray) {
@@ -85,6 +87,7 @@ fetch("./js/data.json")
           let src = document.getElementById(currentMedia.id);
           let img = document.createElement("img");
           img.classList.add("media");
+          img.setAttribute("id", `${currentMedia.id}`);
           img.setAttribute("alt", `${currentMedia.title}`);
           img.src = `./img/${folderName}/${currentMedia.image}`;
           src.appendChild(img);
@@ -93,6 +96,7 @@ fetch("./js/data.json")
           let img = document.createElement("video");
           img.setAttribute("src", `./img/${folderName}/${currentMedia.video}`);
           img.classList.add("media");
+          img.setAttribute("id", `${currentMedia.id}`);
           img.setAttribute("title", `${currentMedia.title}`);
           let src = document.getElementById(currentMedia.id);
           src.appendChild(img);
@@ -148,14 +152,14 @@ fetch("./js/data.json")
       if (image.tagName == "IMG") {
         viewer.insertAdjacentHTML(
           "beforeend",
-          `<img src=${image.src} alt=${image.alt}>
+          `<img src=${image.src} id=${image.id} alt=${image.alt}>
           <p>${image.alt}</p>`
         );
       }
       if (image.tagName == "VIDEO") {
         viewer.insertAdjacentHTML(
           "beforeend",
-          `<video src=${image.src} id='videoPlayer' controls="controls">
+          `<video src=${image.src} id=${image.id}  controls="controls">
             <source id='mp4Source' src="movie.mp4" type="video/mp4" />
             <source id='oggSource' src="movie.ogg" type="video/ogg" />
             </video>
@@ -172,20 +176,14 @@ fetch("./js/data.json")
     let suivant = document.getElementById("flechedroite");
 
     // ______ Ecoute du click sur les images ________
-
     images.forEach((image, index) => {
-      for (let i = 0; i <= images.length; i++) {
-        image.index = i;
-      }
       // Affichage de la lightbox / Viewer
       image.addEventListener("click", function setViewer(e) {
-        let currentImage = image;
         let lastIndex = images.length - 1;
         let lastMedia = images[lastIndex];
         let x = 0;
         container.classList.add("active");
         commandViewer(image);
-        console.log(currentImage);
         // PASSER A L'IMAGE PRECEDENTE
         precedent.addEventListener("click", function (e) {
           getPrevious();
@@ -193,8 +191,9 @@ fetch("./js/data.json")
         function getPrevious() {
           // Si il y a une image avant
           x++;
-          if (images[index + x]) {
-            commandViewer(images[index - x]);
+          if (images[index - 1]) {
+            commandViewer(images[index - 1]);
+            index = index - 1;
           } else {
             // Sinon afficher la dernière photo
             commandViewer(lastMedia);
@@ -210,8 +209,9 @@ fetch("./js/data.json")
         function getNext() {
           x++;
           // Si il y a une image après
-          if (images[index + x]) {
-            commandViewer(images[index + x]);
+          if (images[index + 1]) {
+            commandViewer(images[index + 1]);
+            index = index + 1;
           } else {
             // Sinon afficher la première photo
             commandViewer(images[0]);
@@ -239,8 +239,23 @@ fetch("./js/data.json")
       .getElementById("description")
       .insertAdjacentHTML(
         "afterend",
-        `<div class="footer"><p class="compteur">${likesTotal}<i class="fas fa-heart" aria-label="likes"></i><p> <p>${currentPhotographer.price}€ / jour</div>`
+        `<div class="footer"><div><p id="compteur">${likesTotal}<p><i class="fas fa-heart" aria-label="likes"></i></div> <p>${currentPhotographer.price}€ / jour</div>`
       );
+    let likesCount = document.querySelectorAll(".likesCount");
+    let compteur = document.getElementById("compteur");
+    likesCount.forEach((button) => {
+      button.addEventListener("click", function () {
+        if (button.classList.contains("loved")) {
+          button.classList.remove("loved");
+          likesTotal--;
+          compteur.innerHTML = likesTotal;
+        } else {
+          button.classList.add("loved");
+          likesTotal++;
+          compteur.innerHTML = likesTotal;
+        }
+      });
+    });
   });
 
 // ECOUTE DES FILTRES
