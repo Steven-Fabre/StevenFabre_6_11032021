@@ -273,5 +273,7 @@ textarea {
     transition: all 400ms;
     transform: scale(1.1);
     color: green;
+
+    z-index: -1;
   }
 }

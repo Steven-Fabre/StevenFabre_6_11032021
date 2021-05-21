@@ -1,20 +1,12 @@
 "use strict";
+// Declaration de variables hors du fichier JSON
 let currentMediaList = [];
 let check;
 let launchViewer;
-
-// Ecoute des évenements
-document.addEventListener("click", function (event) {
-  console.log(event.target.classList);
-  // OPEN AND CLOSE CONTACT MODAL
-  if (event.target.classList.contains("toggle-modal")) {
-    document.getElementById("modal").classList.toggle("hidden");
-  }
-  if (event.target.classList.contains("media")) {
-    launchViewer();
-  }
-});
-
+let cardsArray;
+let indexo;
+// Compteur de likes
+let likesTotal = 0;
 // Ecoute du bouton ECHAP pour fermer la modal
 document.addEventListener("keydown", (e) =>
   e.code == "Escape" ? modal.classList.add("hidden") : ""
@@ -39,76 +31,50 @@ fetch("./js/data.json")
     let images = document.querySelectorAll(".media");
     let precedent = document.getElementById("flechegauche");
     let suivant = document.getElementById("flechedroite");
-    // Compteur de likes
-    let likesTotal = 0;
 
     // _________ Declaration des fonctions
+    //TRI PAR TITRE
 
-    launchViewer = function () {
-      // ______ Ecoute du click sur les images ________
-      images.forEach((image, index) => {
-        let setViewer = function (e) {
-          console.log("img cliqué");
-          let lastIndex = images.length - 1;
-          let lastMedia = images[lastIndex];
-          let x = 0;
-          container.classList.add("active");
-          commandViewer(image);
-          // PASSER A L'IMAGE PRECEDENTE
-          precedent.addEventListener("click", function (e) {
-            getPrevious();
-          });
-          function getPrevious() {
-            // Si il y a une image avant
-            x++;
-            if (images[index - 1]) {
-              commandViewer(images[index - 1]);
-              index = index - 1;
-            } else {
-              // Sinon afficher la dernière photo
-              commandViewer(lastMedia);
-              index = lastIndex;
-              x = 0;
-            }
-          }
-
-          // PASSER A L'IMAGE SUIVANTE
-          suivant.addEventListener("click", function (e) {
-            getNext();
-          });
-
-          function getNext() {
-            x++;
-            // Si il y a une image après
-            if (images[index + 1]) {
-              commandViewer(images[index + 1]);
-              index = index + 1;
-            } else {
-              // Sinon afficher la première photo
-              commandViewer(images[0]);
-              index = 0;
-              x = 0;
-            }
-          }
-          // ECOUTE DES TOUCHES DE NAVIGATION
-          document.addEventListener("keydown", (e) => {
-            if (e.code == "Escape") container.classList.remove("active");
-            else if (e.code == "ArrowLeft") {
-              getPrevious();
-            } else if (e.code == "ArrowRight") {
-              getNext();
-            }
-          });
-        };
-        // Affichage de la lightbox / Viewer
-        image.addEventListener("click", setViewer());
+    let sortByTitle = function () {
+      currentMediaList.sort(function (a, b) {
+        if (a.title < b.title) {
+          return -1;
+        }
+        if (a.title > b.title) {
+          return 1;
+        }
+        return 0;
       });
     };
+    ////  TRI PAR DATE
+    let sortByDate = function () {
+      currentMediaList.sort(function (a, b) {
+        if (a.date < b.date) {
+          return -1;
+        }
+        if (a.date > b.date) {
+          return 1;
+        }
+        return 0;
+      });
+    };
+    // // TRI PAR POPULARITE
+    let sortByPopularity = function () {
+      currentMediaList.sort(function (a, b) {
+        if (a.likes > b.likes) {
+          return -1;
+        }
+        if (a.likes < b.likes) {
+          return 1;
+        }
+        return 0;
+      });
+    };
+
     function getFirstWord(str) {
       let spaceIndex = str.indexOf(" ");
       return spaceIndex === -1 ? str : str.substr(0, spaceIndex);
     }
-
     check = function () {
       dropdown = document.getElementById("trier-par");
       let value = dropdown.value;
@@ -133,7 +99,7 @@ fetch("./js/data.json")
           `<div id=${currentMedia.id} class ="mediaCard ${currentMedia.tags}">
           <div class="photoDescription">
           <p>${currentMedia.title}</p>
-          <div class="likesCount">
+          <div class="likesCount" onclick="likeFunc(this)">
           <p>${currentMedia.likes}</p>
           <i class="fas fa-heart" aria-label="likes"></i>
           </div>
@@ -156,10 +122,13 @@ fetch("./js/data.json")
         }
 
         // Créer le total des likes en rajoutant à chaque itération
-
-        likesTotal += currentMedia.likes;
+        function totalLikes() {
+          likesTotal = currentMediaList.reduce(function (accumulator, item) {
+            return accumulator + item.likes;
+          }, 0);
+        }
+        totalLikes();
       }
-      launchViewer();
     };
 
     // Definir le photographe actuel et ses média correspondants
@@ -202,30 +171,88 @@ fetch("./js/data.json")
     let modalName = document.querySelector(".modalname");
     modalName.textContent = `${currentPhotographer.name}`;
 
-    function commandViewer(image) {
+    function commandViewer(mediaElement) {
       // ENLEVER L'image du viewer si il y en a une
       while (viewer.firstChild) {
         viewer.removeChild(viewer.firstChild);
       }
-      if (image.tagName == "IMG") {
+      container.classList.add("active");
+      if (mediaElement.tagName == "IMG") {
         viewer.insertAdjacentHTML(
           "beforeend",
-          `<img src=${image.src} id=${image.id} alt=${image.alt}>
-          <p>${image.alt}</p>`
+          `<img src=${mediaElement.src} id=${mediaElement.id} alt=${mediaElement.alt}>
+          <p>${mediaElement.alt}</p>`
         );
       }
-      if (image.tagName == "VIDEO") {
+      if (mediaElement.tagName == "VIDEO") {
         viewer.insertAdjacentHTML(
           "beforeend",
-          `<video src=${image.src} id="${image.id}"  controls="controls">
+          `<video src=${mediaElement.src} id="${mediaElement.id}"  controls="controls">
             <source id='mp4Source' src="movie.mp4" type="video/mp4" />
             <source id='oggSource' src="movie.ogg" type="video/ogg" />
             </video>
-            <p>${image.title}</p>`
+            <p>${mediaElement.title}</p>`
         );
       }
     }
     check();
+    // ______ Ecoute du click sur les images ________
+    images = document.querySelectorAll(".media");
+    let indexo;
+    let index;
+    let lastIndex;
+    let lastMedia;
+    for (let i in currentMediaList) {
+      currentMedia = currentMediaList[i];
+      index = i;
+      lastIndex = currentMediaList.length - 1;
+    }
+
+    // PASSER A L'IMAGE PRECEDENTE
+    precedent.addEventListener("click", function () {
+      getPrevious();
+    });
+    function getPrevious() {
+      lastMedia = cardsArray[lastIndex];
+
+      // Si il y a une image avant
+      if (cardsArray[indexo - 1]) {
+        commandViewer(cardsArray[indexo - 1]);
+        indexo = indexo - 1;
+      } else {
+        // Sinon afficher la dernière photo
+        commandViewer(lastMedia);
+        indexo = lastIndex;
+      }
+    }
+
+    // PASSER A L'IMAGE SUIVANTE
+    suivant.addEventListener("click", function () {
+      getNext();
+    });
+
+    function getNext() {
+      lastMedia = cardsArray[lastIndex];
+
+      // Si il y a une image après
+      if (cardsArray[indexo + 1]) {
+        commandViewer(cardsArray[indexo + 1]);
+        indexo = indexo + 1;
+      } else {
+        // Sinon afficher la première photo
+        commandViewer(cardsArray[0]);
+        indexo = 0;
+      }
+    }
+    // ECOUTE DES TOUCHES DE NAVIGATION
+    document.addEventListener("keydown", (e) => {
+      if (e.code == "Escape") container.classList.remove("active");
+      else if (e.code == "ArrowLeft") {
+        getPrevious();
+      } else if (e.code == "ArrowRight") {
+        getNext();
+      }
+    });
 
     // Fermer le viewer
     closeViewer.addEventListener("click", (e) => {
@@ -238,22 +265,35 @@ fetch("./js/data.json")
         "afterend",
         `<div class="footer"><div><p id="compteur">${likesTotal}<p><i class="fas fa-heart" aria-label="likes"></i></div> <p>${currentPhotographer.price}€ / jour</div>`
       );
-    let likesCount = document.querySelectorAll(".likesCount");
-    let compteur = document.getElementById("compteur");
-    likesCount.forEach((button) => {
-      button.addEventListener("click", function () {
-        if (button.classList.contains("loved")) {
-          button.classList.remove("loved");
-          likesTotal--;
-          compteur.innerHTML = likesTotal;
-        } else {
-          button.classList.add("loved");
-          likesTotal++;
-          compteur.innerHTML = likesTotal;
-        }
-      });
+
+    // Ecoute des évenements
+    document.addEventListener("click", function (event) {
+      // OPEN AND CLOSE CONTACT MODAL
+      if (event.target.classList.contains("toggle-modal")) {
+        document.getElementById("modal").classList.toggle("hidden");
+      }
+      if (event.target.classList.contains("media")) {
+        let cards = document.getElementsByClassName("media");
+        cardsArray = Array.from(cards);
+        indexo = cardsArray.findIndex(
+          (object) => object.src === event.target.src
+        );
+        commandViewer(cardsArray[indexo]);
+      }
     });
   });
+let likeFunc = (button) => {
+  let compteur = document.getElementById("compteur");
+  if (button.classList.contains("loved")) {
+    button.classList.remove("loved");
+    likesTotal--;
+    compteur.innerHTML = likesTotal;
+  } else {
+    button.classList.add("loved");
+    likesTotal++;
+    compteur.innerHTML = likesTotal;
+  }
+};
 
 // ECOUTE DES FILTRES
 window.onhashchange = hashChange;
@@ -274,41 +314,3 @@ function hashChange() {
 }
 
 let dropdown = document.getElementById("trier-par");
-
-//TRI PAR TITRE
-
-let sortByTitle = function () {
-  currentMediaList.sort(function (a, b) {
-    if (a.title < b.title) {
-      return -1;
-    }
-    if (a.title > b.title) {
-      return 1;
-    }
-    return 0;
-  });
-};
-////  TRI PAR DATE
-let sortByDate = function () {
-  currentMediaList.sort(function (a, b) {
-    if (a.date < b.date) {
-      return -1;
-    }
-    if (a.date > b.date) {
-      return 1;
-    }
-    return 0;
-  });
-};
-// // TRI PAR POPULARITE
-let sortByPopularity = function () {
-  currentMediaList.sort(function (a, b) {
-    if (a.likes > b.likes) {
-      return -1;
-    }
-    if (a.likes < b.likes) {
-      return 1;
-    }
-    return 0;
-  });
-};
