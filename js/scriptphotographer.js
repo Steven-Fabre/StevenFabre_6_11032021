@@ -1,5 +1,25 @@
 "use strict";
 let currentMediaList = [];
+let check;
+let launchViewer;
+
+// Ecoute des évenements
+document.addEventListener("click", function (event) {
+  console.log(event.target.classList);
+  // OPEN AND CLOSE CONTACT MODAL
+  if (event.target.classList.contains("toggle-modal")) {
+    document.getElementById("modal").classList.toggle("hidden");
+  }
+  if (event.target.classList.contains("media")) {
+    launchViewer();
+  }
+});
+
+// Ecoute du bouton ECHAP pour fermer la modal
+document.addEventListener("keydown", (e) =>
+  e.code == "Escape" ? modal.classList.add("hidden") : ""
+);
+
 fetch("./js/data.json")
   .then((resp) => resp.json())
   .then(function (data) {
@@ -13,13 +33,146 @@ fetch("./js/data.json")
     let photographerProfil = document.getElementById("profil");
     let photoArticle = document.getElementById("photo");
     let container = document.getElementById("container");
-
+    // Variables pour le Carousel d'image
+    let viewer = document.getElementById("viewer");
+    let closeViewer = document.getElementById("croixviewer");
+    let images = document.querySelectorAll(".media");
+    let precedent = document.getElementById("flechegauche");
+    let suivant = document.getElementById("flechedroite");
     // Compteur de likes
     let likesTotal = 0;
+
+    // _________ Declaration des fonctions
+
+    launchViewer = function () {
+      // ______ Ecoute du click sur les images ________
+      images.forEach((image, index) => {
+        let setViewer = function (e) {
+          console.log("img cliqué");
+          let lastIndex = images.length - 1;
+          let lastMedia = images[lastIndex];
+          let x = 0;
+          container.classList.add("active");
+          commandViewer(image);
+          // PASSER A L'IMAGE PRECEDENTE
+          precedent.addEventListener("click", function (e) {
+            getPrevious();
+          });
+          function getPrevious() {
+            // Si il y a une image avant
+            x++;
+            if (images[index - 1]) {
+              commandViewer(images[index - 1]);
+              index = index - 1;
+            } else {
+              // Sinon afficher la dernière photo
+              commandViewer(lastMedia);
+              index = lastIndex;
+              x = 0;
+            }
+          }
+
+          // PASSER A L'IMAGE SUIVANTE
+          suivant.addEventListener("click", function (e) {
+            getNext();
+          });
+
+          function getNext() {
+            x++;
+            // Si il y a une image après
+            if (images[index + 1]) {
+              commandViewer(images[index + 1]);
+              index = index + 1;
+            } else {
+              // Sinon afficher la première photo
+              commandViewer(images[0]);
+              index = 0;
+              x = 0;
+            }
+          }
+          // ECOUTE DES TOUCHES DE NAVIGATION
+          document.addEventListener("keydown", (e) => {
+            if (e.code == "Escape") container.classList.remove("active");
+            else if (e.code == "ArrowLeft") {
+              getPrevious();
+            } else if (e.code == "ArrowRight") {
+              getNext();
+            }
+          });
+        };
+        // Affichage de la lightbox / Viewer
+        image.addEventListener("click", setViewer());
+      });
+    };
+    function getFirstWord(str) {
+      let spaceIndex = str.indexOf(" ");
+      return spaceIndex === -1 ? str : str.substr(0, spaceIndex);
+    }
+
+    check = function () {
+      dropdown = document.getElementById("trier-par");
+      let value = dropdown.value;
+      while (photoArticle.firstChild) {
+        photoArticle.removeChild(photoArticle.firstChild);
+      }
+      switch (value) {
+        case "popularite":
+          sortByPopularity();
+          break;
+        case "date":
+          sortByDate();
+          break;
+        case "titre":
+          sortByTitle();
+          break;
+      }
+      for (let i in currentMediaList) {
+        currentMedia = currentMediaList[i];
+        photoArticle.insertAdjacentHTML(
+          "beforeend",
+          `<div id=${currentMedia.id} class ="mediaCard ${currentMedia.tags}">
+          <div class="photoDescription">
+          <p>${currentMedia.title}</p>
+          <div class="likesCount">
+          <p>${currentMedia.likes}</p>
+          <i class="fas fa-heart" aria-label="likes"></i>
+          </div>
+          </div>
+          </div>`
+        );
+        currentId = document.getElementById(`${currentMedia.id}`);
+        // Creer le media suivant si c'est une photo ou une video
+        if (currentMedia.image) {
+          currentId.insertAdjacentHTML(
+            "afterBegin",
+            `<img class="media" alt=${currentMedia.title} src="./img/${folderName}/${currentMedia.image}">`
+          );
+        }
+        if (currentMedia.video) {
+          currentId.insertAdjacentHTML(
+            "afterBegin",
+            `<video class="media" alt="${currentMedia.title}" src="./img/${folderName}/${currentMedia.video}"></video>`
+          );
+        }
+
+        // Créer le total des likes en rajoutant à chaque itération
+
+        likesTotal += currentMedia.likes;
+      }
+      launchViewer();
+    };
+
+    // Definir le photographe actuel et ses média correspondants
 
     for (let i in photographersArray) {
       if (photographersArray[i].id == idPage) {
         currentPhotographer = photographersArray[i];
+      }
+    }
+    let folderName = getFirstWord(`${currentPhotographer.name}`);
+    for (let i in mediaArray) {
+      if (mediaArray[i].photographerId == idPage) {
+        currentMediaList.push(mediaArray[i]);
       }
     }
 
@@ -49,68 +202,6 @@ fetch("./js/data.json")
     let modalName = document.querySelector(".modalname");
     modalName.textContent = `${currentPhotographer.name}`;
 
-    // _______________ Afficher les photos __________
-
-    function getFirstWord(str) {
-      let spaceIndex = str.indexOf(" ");
-      return spaceIndex === -1 ? str : str.substr(0, spaceIndex);
-    }
-
-    let folderName = getFirstWord(`${currentPhotographer.name}`);
-    for (let i in mediaArray) {
-      if (mediaArray[i].photographerId == idPage) {
-        currentMediaList.push(mediaArray[i]);
-      }
-    }
-
-    sortByPopularity();
-    // dropdown.addEventListener("change", check());
-
-    for (let i in currentMediaList) {
-      currentMedia = currentMediaList[i];
-      photoArticle.insertAdjacentHTML(
-        "beforeend",
-        `<div id=${currentMedia.id} class ="mediaCard ${currentMedia.tags}">
-        <div class="photoDescription">
-        <p>${currentMedia.title}</p>
-        <div class="likesCount">
-        <p>${currentMedia.likes}</p>
-        <i class="fas fa-heart" aria-label="likes"></i>
-        </div>
-        </div>
-        </div>`
-      );
-      currentId = document.getElementById(`${currentMedia.id}`);
-      // Creer le media suivant si c'est une photo ou une video
-      if (currentMedia.image) {
-        currentId.insertAdjacentHTML(
-          "afterBegin",
-          `<img class="media" alt=${currentMedia.title} src="./img/${folderName}/${currentMedia.image}">`
-        );
-      }
-      if (currentMedia.video) {
-        currentId.insertAdjacentHTML(
-          "afterBegin",
-          `<video class="media" alt="${currentMedia.title}" src="./img/${folderName}/${currentMedia.video}"></video>`
-        );
-      }
-
-      // Créer le total des likes en rajoutant à chaque itération
-
-      likesTotal += currentMedia.likes;
-    }
-
-    // OPEN AND CLOSE CONTACT MODAL
-    let modalOpener = document.querySelectorAll(".toggle-modal");
-    let modal = document.getElementById("modal");
-    modalOpener.forEach((btn) => btn.addEventListener("click", toggleModal));
-    function toggleModal() {
-      modal.classList.toggle("hidden");
-    }
-    // Ecoute du bouton ECHAP pour fermer la modal
-    document.addEventListener("keydown", (e) =>
-      e.code == "Escape" ? modal.classList.add("hidden") : ""
-    );
     function commandViewer(image) {
       // ENLEVER L'image du viewer si il y en a une
       while (viewer.firstChild) {
@@ -134,69 +225,8 @@ fetch("./js/data.json")
         );
       }
     }
-    // Variables pour le Carousel d'image
-    let viewer = document.getElementById("viewer");
-    let closeViewer = document.getElementById("croixviewer");
-    let images = document.querySelectorAll(".media");
-    let precedent = document.getElementById("flechegauche");
-    let suivant = document.getElementById("flechedroite");
+    check();
 
-    // ______ Ecoute du click sur les images ________
-    images.forEach((image, index) => {
-      // Affichage de la lightbox / Viewer
-      image.addEventListener("click", function setViewer(e) {
-        let lastIndex = images.length - 1;
-        let lastMedia = images[lastIndex];
-        let x = 0;
-        container.classList.add("active");
-        commandViewer(image);
-        // PASSER A L'IMAGE PRECEDENTE
-        precedent.addEventListener("click", function (e) {
-          getPrevious();
-        });
-        function getPrevious() {
-          // Si il y a une image avant
-          x++;
-          if (images[index - 1]) {
-            commandViewer(images[index - 1]);
-            index = index - 1;
-          } else {
-            // Sinon afficher la dernière photo
-            commandViewer(lastMedia);
-            index = lastIndex;
-            x = 0;
-          }
-        }
-
-        // PASSER A L'IMAGE SUIVANTE
-        suivant.addEventListener("click", function (e) {
-          getNext();
-        });
-
-        function getNext() {
-          x++;
-          // Si il y a une image après
-          if (images[index + 1]) {
-            commandViewer(images[index + 1]);
-            index = index + 1;
-          } else {
-            // Sinon afficher la première photo
-            commandViewer(images[0]);
-            index = 0;
-            x = 0;
-          }
-        }
-        // ECOUTE DES TOUCHES DE NAVIGATION
-        document.addEventListener("keydown", (e) => {
-          if (e.code == "Escape") container.classList.remove("active");
-          else if (e.code == "ArrowLeft") {
-            getPrevious();
-          } else if (e.code == "ArrowRight") {
-            getNext();
-          }
-        });
-      });
-    });
     // Fermer le viewer
     closeViewer.addEventListener("click", (e) => {
       container.classList.remove("active");
@@ -244,20 +274,6 @@ function hashChange() {
 }
 
 let dropdown = document.getElementById("trier-par");
-function check() {
-  let value = dropdown.value;
-  switch (value) {
-    case "popularite":
-      sortByPopularity();
-      break;
-    case "date":
-      sortByDate();
-      break;
-    case "titre":
-      sortByTitle();
-      break;
-  }
-}
 
 //TRI PAR TITRE
 
