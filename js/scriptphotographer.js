@@ -1,4 +1,5 @@
 "use strict";
+let currentMediaList = [];
 fetch("./js/data.json")
   .then((resp) => resp.json())
   .then(function (data) {
@@ -8,8 +9,10 @@ fetch("./js/data.json")
     let mediaArray = data.media;
     let currentPhotographer;
     let currentMedia;
-    let currentMediaList = [];
+    let currentId;
+    let photographerProfil = document.getElementById("profil");
     let photoArticle = document.getElementById("photo");
+    let container = document.getElementById("container");
 
     // Compteur de likes
     let likesTotal = 0;
@@ -19,34 +22,21 @@ fetch("./js/data.json")
         currentPhotographer = photographersArray[i];
       }
     }
-    //Fonction générique de création de contenu à partir des objets JSON
-    function insertElement(elementType, innerContent, parentDiv) {
-      let el = document.createElement(elementType);
-      el.innerHTML = innerContent;
-      document.getElementById(parentDiv).appendChild(el);
-    }
-    // Fonction générique de création de carte à partir des objets JSON
-    function createHTML(elementType, innerAttContent, parentDiv) {
-      let element = document.createElement(elementType);
-      element.setAttribute("id", innerAttContent);
-      document.getElementById(parentDiv).appendChild(element);
-    }
-    createHTML("div", `description`, "profil");
-    createHTML("div", `contact`, "description");
-    insertElement("h1", `${currentPhotographer.name}`, "contact");
-    createHTML("button", "btn-modal", "contact");
-    let btnModal = document.getElementById("btn-modal");
-    btnModal.classList.add("btn-modal");
-    btnModal.classList.add("toggle-modal");
-    btnModal.innerHTML = "Contactez-moi";
-    insertElement(
-      "h3",
-      `${currentPhotographer.city},${currentPhotographer.country}`,
-      "description"
+
+    // Création de la carte Profil
+    photographerProfil.insertAdjacentHTML(
+      "beforeend",
+      `<div id="description">
+      <div id="contact">
+      <h1>"${currentPhotographer.name}"</h1>
+      <button id="btn-modal" class="btn-modal toggle-modal">Contactez-moi</button>
+      </div>
+      <h3>"${currentPhotographer.city},${currentPhotographer.country}"</h3>
+      <h4>"${currentPhotographer.tagline}"</h4>
+      <div id="tags"></div>
+      </div>
+      <img class="profilpic" src="./img/IDPhotos/${currentPhotographer.portrait}">`
     );
-    insertElement("h4", `${currentPhotographer.tagline}`, "description");
-    // Création des tags
-    createHTML("div", `tags`, "description");
     for (let tag in currentPhotographer.tags) {
       let tagBtn = document.createElement("a");
       document.getElementById("tags").appendChild(tagBtn);
@@ -55,14 +45,6 @@ fetch("./js/data.json")
       tagBtn.setAttribute("class", `filters`);
       tagBtn.innerHTML = `#${currentPhotographer.tags[tag]}`;
     }
-
-    // Ajout de la photo de profil
-    document
-      .getElementById("description")
-      .insertAdjacentHTML(
-        "afterend",
-        `<img class="profilpic" src="./img/IDPhotos/${currentPhotographer.portrait}">`
-      );
 
     let modalName = document.querySelector(".modalname");
     modalName.textContent = `${currentPhotographer.name}`;
@@ -75,67 +57,49 @@ fetch("./js/data.json")
     }
 
     let folderName = getFirstWord(`${currentPhotographer.name}`);
-    // Creer le media suivant si c'est une photo ou une video
     for (let i in mediaArray) {
       if (mediaArray[i].photographerId == idPage) {
-        currentMedia = mediaArray[i];
-        createHTML("div", `${currentMedia.id}`, "photo");
-        let photoDiv = document.getElementById(`${currentMedia.id}`);
-        photoDiv.setAttribute("class", "mediaCard");
-        photoDiv.classList.add(`${currentMedia.tags}`);
-        if (currentMedia.image) {
-          let src = document.getElementById(currentMedia.id);
-          let img = document.createElement("img");
-          img.classList.add("media");
-          img.setAttribute("id", `${currentMedia.id}`);
-          img.setAttribute("alt", `${currentMedia.title}`);
-          img.src = `./img/${folderName}/${currentMedia.image}`;
-          src.appendChild(img);
-        }
-        if (currentMedia.video) {
-          let img = document.createElement("video");
-          img.setAttribute("src", `./img/${folderName}/${currentMedia.video}`);
-          img.classList.add("media");
-          img.setAttribute("id", `${currentMedia.id}`);
-          img.setAttribute("title", `${currentMedia.title}`);
-          let src = document.getElementById(currentMedia.id);
-          src.appendChild(img);
-        }
-        // DESCRIPTION DE LA PHOTO
-        createHTML(
-          "div",
-          `photodescription${currentMedia.id}`,
-          `${currentMedia.id}`
-        );
-        let photoDescription = document.getElementById(
-          `photodescription${currentMedia.id}`
-        );
-        photoDescription.setAttribute("class", "photoDescription");
-
-        insertElement(
-          "p",
-          `${currentMedia.title}`,
-          `photodescription${currentMedia.id}`
-        );
-        // Creation des likes
-        createHTML(
-          "div",
-          `like${currentMedia.id}`,
-          `photodescription${currentMedia.id}`
-        );
-        insertElement("p", `${currentMedia.likes}`, `like${currentMedia.id}`);
-        let likes = document.getElementById(`like${currentMedia.id}`);
-        likes.setAttribute("class", "likesCount");
-        likes.insertAdjacentHTML(
-          "beforeend",
-          `<i class="fas fa-heart" aria-label="likes"></i>`
-        );
-
-        // Créer le total des likes en rajoutant à chaque itération
-
-        likesTotal += currentMedia.likes;
+        currentMediaList.push(mediaArray[i]);
       }
     }
+
+    sortByPopularity();
+    // dropdown.addEventListener("change", check());
+
+    for (let i in currentMediaList) {
+      currentMedia = currentMediaList[i];
+      photoArticle.insertAdjacentHTML(
+        "beforeend",
+        `<div id=${currentMedia.id} class ="mediaCard ${currentMedia.tags}">
+        <div class="photoDescription">
+        <p>${currentMedia.title}</p>
+        <div class="likesCount">
+        <p>${currentMedia.likes}</p>
+        <i class="fas fa-heart" aria-label="likes"></i>
+        </div>
+        </div>
+        </div>`
+      );
+      currentId = document.getElementById(`${currentMedia.id}`);
+      // Creer le media suivant si c'est une photo ou une video
+      if (currentMedia.image) {
+        currentId.insertAdjacentHTML(
+          "afterBegin",
+          `<img class="media" alt=${currentMedia.title} src="./img/${folderName}/${currentMedia.image}">`
+        );
+      }
+      if (currentMedia.video) {
+        currentId.insertAdjacentHTML(
+          "afterBegin",
+          `<video class="media" alt="${currentMedia.title}" src="./img/${folderName}/${currentMedia.video}"></video>`
+        );
+      }
+
+      // Créer le total des likes en rajoutant à chaque itération
+
+      likesTotal += currentMedia.likes;
+    }
+
     // OPEN AND CLOSE CONTACT MODAL
     let modalOpener = document.querySelectorAll(".toggle-modal");
     let modal = document.getElementById("modal");
@@ -143,7 +107,10 @@ fetch("./js/data.json")
     function toggleModal() {
       modal.classList.toggle("hidden");
     }
-
+    // Ecoute du bouton ECHAP pour fermer la modal
+    document.addEventListener("keydown", (e) =>
+      e.code == "Escape" ? modal.classList.add("hidden") : ""
+    );
     function commandViewer(image) {
       // ENLEVER L'image du viewer si il y en a une
       while (viewer.firstChild) {
@@ -159,7 +126,7 @@ fetch("./js/data.json")
       if (image.tagName == "VIDEO") {
         viewer.insertAdjacentHTML(
           "beforeend",
-          `<video src=${image.src} id=${image.id}  controls="controls">
+          `<video src=${image.src} id="${image.id}"  controls="controls">
             <source id='mp4Source' src="movie.mp4" type="video/mp4" />
             <source id='oggSource' src="movie.ogg" type="video/ogg" />
             </video>
@@ -170,7 +137,6 @@ fetch("./js/data.json")
     // Variables pour le Carousel d'image
     let viewer = document.getElementById("viewer");
     let closeViewer = document.getElementById("croixviewer");
-    let container = document.getElementById("container");
     let images = document.querySelectorAll(".media");
     let precedent = document.getElementById("flechegauche");
     let suivant = document.getElementById("flechedroite");
@@ -202,6 +168,7 @@ fetch("./js/data.json")
           }
         }
 
+        // PASSER A L'IMAGE SUIVANTE
         suivant.addEventListener("click", function (e) {
           getNext();
         });
@@ -219,9 +186,9 @@ fetch("./js/data.json")
             x = 0;
           }
         }
+        // ECOUTE DES TOUCHES DE NAVIGATION
         document.addEventListener("keydown", (e) => {
-          if (e.code == "Escape")
-            container.classList.remove("active"), modal.classList.add("hidden");
+          if (e.code == "Escape") container.classList.remove("active");
           else if (e.code == "ArrowLeft") {
             getPrevious();
           } else if (e.code == "ArrowRight") {
@@ -275,3 +242,57 @@ function hashChange() {
     }
   }
 }
+
+let dropdown = document.getElementById("trier-par");
+function check() {
+  let value = dropdown.value;
+  switch (value) {
+    case "popularite":
+      sortByPopularity();
+      break;
+    case "date":
+      sortByDate();
+      break;
+    case "titre":
+      sortByTitle();
+      break;
+  }
+}
+
+//TRI PAR TITRE
+
+let sortByTitle = function () {
+  currentMediaList.sort(function (a, b) {
+    if (a.title < b.title) {
+      return -1;
+    }
+    if (a.title > b.title) {
+      return 1;
+    }
+    return 0;
+  });
+};
+////  TRI PAR DATE
+let sortByDate = function () {
+  currentMediaList.sort(function (a, b) {
+    if (a.date < b.date) {
+      return -1;
+    }
+    if (a.date > b.date) {
+      return 1;
+    }
+    return 0;
+  });
+};
+// // TRI PAR POPULARITE
+let sortByPopularity = function () {
+  currentMediaList.sort(function (a, b) {
+    if (a.likes > b.likes) {
+      return -1;
+    }
+    if (a.likes < b.likes) {
+      return 1;
+    }
+    return 0;
+  });
+};
