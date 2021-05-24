@@ -43,6 +43,12 @@ body {
     color: $second-color;
   }
 }
+
+#return {
+  z-index: 998;
+  border-radius: 5px;
+}
+
 .btn-modal,
 select {
   min-width: 170px;
@@ -179,6 +185,7 @@ textarea {
 
 // CAROUSEL
 #container {
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;

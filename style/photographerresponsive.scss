@@ -29,8 +29,8 @@
   }
 
   .mediaCard {
-    width: initial;
-    margin: 0;
+    width: 100%;
+    margin: 10px 0;
   }
   .photoDescription {
     p,
@@ -77,7 +77,7 @@
   }
 
   #return {
-    display: none;
+    font-size: 18px;
   }
 
   .filters {
@@ -133,7 +133,7 @@
 
   #reserve * {
     width: 93%;
-    margin: 10px auto;
+    margin: 7px auto;
     font-size: 24px;
     line-height: 31px;
   }

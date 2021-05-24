@@ -128,7 +128,7 @@ fetch("./js/data.json")
         if (currentMedia.video) {
           currentId.insertAdjacentHTML(
             "afterBegin",
-            `<video class="media" alt="${currentMedia.title}"  id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.video}"></video>`
+            `<video  class="media" alt="${currentMedia.title}"  id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.video}"> <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="./img/${folderName}/${currentMedia.video}">lien de la vidéo</a> à télécharger</p></video>`
           );
         }
 
@@ -172,7 +172,7 @@ fetch("./js/data.json")
       <h4>"${currentPhotographer.tagline}"</h4>
       <div id="tags"></div>
       </div>
-      <img class="profilpic" src="./img/IDPhotos/${currentPhotographer.portrait}">`
+      <img class="profilpic" alt="photo de profil de ${currentPhotographer.name}" src="./img/IDPhotos/${currentPhotographer.portrait}">`
     );
     for (let tag in currentPhotographer.tags) {
       let tagBtn = document.createElement("a");
@@ -203,6 +203,7 @@ fetch("./js/data.json")
         viewer.insertAdjacentHTML(
           "beforeend",
           `<video src=${mediaElement.src} id="${mediaElement.id}"  controls="controls">
+          <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="${mediaElement.src}">lien de la vidéo</a> à télécharger</p>
             <source id='mp4Source' src="movie.mp4" type="video/mp4" />
             <source id='oggSource' src="movie.ogg" type="video/ogg" />
             </video>

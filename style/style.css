@@ -308,6 +308,7 @@ button:hover, button:focus,
 @media screen and (max-width: 1057px) {
   #title {
     order: 1;
+    font-family: "DM Sans", sans-serif;
   }
 
   nav {
@@ -362,6 +363,11 @@ body {
   line-height: 83px;
   margin-right: 10px;
   color: #d3573c;
+}
+
+#return {
+  z-index: 998;
+  border-radius: 5px;
 }
 
 .btn-modal, .btn-submit,
@@ -500,6 +506,7 @@ textarea {
 }
 
 #container {
+  z-index: 999;
   position: fixed;
   top: 0;
   left: 0;
@@ -633,8 +640,8 @@ textarea {
   }
 
   .mediaCard {
-    width: initial;
-    margin: 0;
+    width: 100%;
+    margin: 10px 0;
   }
 
   .photoDescription p,
@@ -680,7 +687,7 @@ textarea {
   }
 
   #return {
-    display: none;
+    font-size: 18px;
   }
 
   .filters {
@@ -733,7 +740,7 @@ img {
 
   #reserve * {
     width: 93%;
-    margin: 10px auto;
+    margin: 7px auto;
     font-size: 24px;
     line-height: 31px;
   }
