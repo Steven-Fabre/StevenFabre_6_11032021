@@ -48,7 +48,7 @@ fetch("./js/data.json")
       link.appendChild(name);
       name.insertAdjacentHTML(
         "beforebegin",
-        `<img class="profilpic" src="./img/IDPhotos/${i.portrait}">`
+        `<img class="profilpic" alt="${i.name}" src="./img/IDPhotos/${i.portrait}">`
       );
       // Création de la localisation
       insertElement("p", `${i.city}, ${i.country}`, nameDiv);
