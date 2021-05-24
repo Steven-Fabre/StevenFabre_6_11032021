@@ -138,6 +138,13 @@ i {
   }
 }
 
+input,
+textarea {
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+}
+
 label {
   font-size: 36px;
   line-height: 47px;
@@ -190,7 +197,7 @@ textarea {
 #croixviewer,
 #flechegauche,
 #flechedroite {
-  z-index: 999;
+  z-index: 9999;
   color: red;
   position: fixed;
 }
@@ -202,12 +209,12 @@ textarea {
 
 #flechegauche {
   top: 50%;
-  left: 50px;
+  left: 75px;
 }
 
 #flechedroite {
   top: 50%;
-  right: 50px;
+  right: 75px;
 }
 
 #container.active {
@@ -228,7 +235,6 @@ textarea {
   align-items: center;
   img,
   video {
-    max-width: 80vh;
     max-height: 80vh;
     object-fit: cover;
     border-radius: 5px;

@@ -3,10 +3,12 @@
 let currentMediaList = [];
 let check;
 let launchViewer;
-let cardsArray;
-let indexo;
-// Compteur de likes
+let cards; // Sera la sélection de tous les média (à actualiser à chaque filtre)
+let cardsArray; // Sera la transformation de la sélection en Array
+let indexo; // Sera l'index de l'objet/média actuel
 let likesTotal = 0;
+let dropdown = document.getElementById("trier-par");
+
 // Ecoute du bouton ECHAP pour fermer la modal
 document.addEventListener("keydown", (e) =>
   e.code == "Escape" ? modal.classList.add("hidden") : ""
@@ -22,8 +24,8 @@ fetch("./js/data.json")
     let currentPhotographer;
     let currentMedia;
     let currentId;
-    let photographerProfil = document.getElementById("profil");
     let photoArticle = document.getElementById("photo");
+    let photographerProfil = document.getElementById("profil");
     let container = document.getElementById("container");
     // Variables pour le Carousel d'image
     let viewer = document.getElementById("viewer");
@@ -31,10 +33,13 @@ fetch("./js/data.json")
     let images = document.querySelectorAll(".media");
     let precedent = document.getElementById("flechegauche");
     let suivant = document.getElementById("flechedroite");
+    // Compteur de likes
+    const compteur = document.getElementById("compteur");
+    const photographerPrice = document.getElementById("photographerPrice");
 
     // _________ Declaration des fonctions
-    //TRI PAR TITRE
 
+    //TRI PAR TITRE
     let sortByTitle = function () {
       currentMediaList.sort(function (a, b) {
         if (a.title < b.title) {
@@ -71,16 +76,21 @@ fetch("./js/data.json")
       });
     };
 
+    // Avoir le premier mot du nom du photographe (pour chercher le dossier photo)
     function getFirstWord(str) {
       let spaceIndex = str.indexOf(" ");
       return spaceIndex === -1 ? str : str.substr(0, spaceIndex);
     }
+
+    // Function principale qui recompose les images par rapport aux filtres et au tri
     check = function () {
       dropdown = document.getElementById("trier-par");
       let value = dropdown.value;
+      // On supprime l'ancienne list
       while (photoArticle.firstChild) {
         photoArticle.removeChild(photoArticle.firstChild);
       }
+      // On regarde l'Option choisi
       switch (value) {
         case "popularite":
           sortByPopularity();
@@ -92,6 +102,7 @@ fetch("./js/data.json")
           sortByTitle();
           break;
       }
+      // On recrée la liste de médias
       for (let i in currentMediaList) {
         currentMedia = currentMediaList[i];
         photoArticle.insertAdjacentHTML(
@@ -99,7 +110,7 @@ fetch("./js/data.json")
           `<div id=${currentMedia.id} class ="mediaCard ${currentMedia.tags}">
           <div class="photoDescription">
           <p>${currentMedia.title}</p>
-          <div class="likesCount" onclick="likeFunc(this)">
+          <div class="likesCount" >
           <p>${currentMedia.likes}</p>
           <i class="fas fa-heart" aria-label="likes"></i>
           </div>
@@ -111,14 +122,18 @@ fetch("./js/data.json")
         if (currentMedia.image) {
           currentId.insertAdjacentHTML(
             "afterBegin",
-            `<img class="media" alt=${currentMedia.title} src="./img/${folderName}/${currentMedia.image}">`
+            `<img class="media" alt=${currentMedia.title} id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.image}">`
           );
         }
         if (currentMedia.video) {
           currentId.insertAdjacentHTML(
             "afterBegin",
-            `<video class="media" alt="${currentMedia.title}" src="./img/${folderName}/${currentMedia.video}"></video>`
+            `<video class="media" alt="${currentMedia.title}"  id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.video}"></video>`
           );
+        }
+
+        if (compteur.classList.contains(`media${currentMedia.id}`)) {
+          document.getElementById(`${currentMedia.id}`).classList.add("loved");
         }
 
         // Créer le total des likes en rajoutant à chaque itération
@@ -163,7 +178,6 @@ fetch("./js/data.json")
       let tagBtn = document.createElement("a");
       document.getElementById("tags").appendChild(tagBtn);
       tagBtn.setAttribute(`value`, `${currentPhotographer.tags[tag]}`);
-      tagBtn.setAttribute("href", `#${currentPhotographer.tags[tag]}`);
       tagBtn.setAttribute("class", `filters`);
       tagBtn.innerHTML = `#${currentPhotographer.tags[tag]}`;
     }
@@ -173,6 +187,7 @@ fetch("./js/data.json")
 
     function commandViewer(mediaElement) {
       // ENLEVER L'image du viewer si il y en a une
+      lastIndex = cardsArray.length - 1;
       while (viewer.firstChild) {
         viewer.removeChild(viewer.firstChild);
       }
@@ -214,14 +229,13 @@ fetch("./js/data.json")
     });
     function getPrevious() {
       lastMedia = cardsArray[lastIndex];
-
       // Si il y a une image avant
       if (cardsArray[indexo - 1]) {
         commandViewer(cardsArray[indexo - 1]);
         indexo = indexo - 1;
       } else {
         // Sinon afficher la dernière photo
-        commandViewer(lastMedia);
+        commandViewer(cardsArray[lastIndex]);
         indexo = lastIndex;
       }
     }
@@ -258,59 +272,67 @@ fetch("./js/data.json")
     closeViewer.addEventListener("click", (e) => {
       container.classList.remove("active");
     });
+
     // Ajout du compteur de likes et tarifs
-    document
-      .getElementById("description")
-      .insertAdjacentHTML(
-        "afterend",
-        `<div class="footer"><div><p id="compteur">${likesTotal}<p><i class="fas fa-heart" aria-label="likes"></i></div> <p>${currentPhotographer.price}€ / jour</div>`
-      );
+    compteur.innerHTML = likesTotal;
+    photographerPrice.innerHTML = `${currentPhotographer.price}€ / jour`;
 
     // Ecoute des évenements
     document.addEventListener("click", function (event) {
+      cards = document.getElementsByClassName("media");
+      cardsArray = Array.from(cards);
       // OPEN AND CLOSE CONTACT MODAL
       if (event.target.classList.contains("toggle-modal")) {
         document.getElementById("modal").classList.toggle("hidden");
       }
       if (event.target.classList.contains("media")) {
-        let cards = document.getElementsByClassName("media");
-        cardsArray = Array.from(cards);
+        //Récupérer le bon média dans la liste de média en séléctionnant par son index
         indexo = cardsArray.findIndex(
           (object) => object.src === event.target.src
         );
         commandViewer(cardsArray[indexo]);
       }
+      if (event.target.closest("div.likesCount")) {
+        let grandParentNode =
+          event.target.closest("div.likesCount").parentNode.parentNode;
+        let mediao = cardsArray.find(
+          (object) => object.id == `media${grandParentNode.id}`
+        );
+        likeFunc(grandParentNode, mediao);
+      }
+      if (event.target.classList.contains("filters")) {
+        let value = event.target.innerHTML.substr(1);
+        filterChange(value);
+      }
     });
   });
-let likeFunc = (button) => {
-  let compteur = document.getElementById("compteur");
-  if (button.classList.contains("loved")) {
-    button.classList.remove("loved");
+let likeFunc = (grandParentNode, mediao) => {
+  // Si le like est déjà actif
+  if (grandParentNode.classList.contains("loved")) {
+    // On ajout au compteur l'id du like
+    compteur.classList.remove(mediao.id);
+    grandParentNode.classList.remove("loved");
     likesTotal--;
     compteur.innerHTML = likesTotal;
   } else {
-    button.classList.add("loved");
+    compteur.classList.add(mediao.id);
+    grandParentNode.classList.add("loved");
     likesTotal++;
     compteur.innerHTML = likesTotal;
   }
 };
 
 // ECOUTE DES FILTRES
-window.onhashchange = hashChange;
-function hashChange() {
+function filterChange(event) {
+  check();
+  // Application des filtres
+  let photoArticle = document.getElementById("photo");
   let returnButton = document.getElementById("return");
-  let linkFilter = window.location.hash.substring(1);
-  let cards = document.getElementsByClassName("mediaCard");
+  cards = document.querySelectorAll(".mediaCard");
   returnButton.classList.remove("hidden");
-  if (window.location.hash) {
-    for (let card of cards) {
-      if (card.classList.contains(`${linkFilter}`)) {
-        card.classList.remove("hidden");
-      } else {
-        card.classList.add("hidden");
-      }
+  cards.forEach((card) => {
+    if (!card.classList.contains(`${event}`)) {
+      photoArticle.removeChild(card);
     }
-  }
+  });
 }
-
-let dropdown = document.getElementById("trier-par");

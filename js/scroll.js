@@ -23,8 +23,6 @@ window.addEventListener(
 returnButton.addEventListener("click", function () {
   window.pageYOffset = 0;
   document.documentElement.scrollTop = 0;
-  for (let card of mediaCard) {
-    card.classList.remove("hidden");
-  }
+  check();
   returnButton.classList.add("hidden");
 });

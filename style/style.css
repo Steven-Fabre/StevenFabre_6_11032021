@@ -458,6 +458,13 @@ i {
   line-height: 83px;
 }
 
+input,
+textarea {
+  border-radius: 5px;
+  padding: 10px;
+  border: none;
+}
+
 label {
   font-size: 36px;
   line-height: 47px;
@@ -511,7 +518,7 @@ textarea {
 #croixviewer,
 #flechegauche,
 #flechedroite {
-  z-index: 999;
+  z-index: 9999;
   color: red;
   position: fixed;
 }
@@ -523,12 +530,12 @@ textarea {
 
 #flechegauche {
   top: 50%;
-  left: 50px;
+  left: 75px;
 }
 
 #flechedroite {
   top: 50%;
-  right: 50px;
+  right: 75px;
 }
 
 #container.active {
@@ -551,7 +558,6 @@ textarea {
 }
 #viewer img,
 #viewer video {
-  max-width: 80vh;
   max-height: 80vh;
   object-fit: cover;
   border-radius: 5px;
@@ -612,10 +618,38 @@ textarea {
     line-height: initial;
   }
 
+  #description {
+    height: 154px;
+  }
   #description h3,
 #description h4 {
     font-size: 13px;
     line-height: 17px;
+  }
+
+  #profil .profilpic {
+    width: 100px;
+    height: 100px;
+  }
+
+  .mediaCard {
+    width: initial;
+    margin: 0;
+  }
+
+  .photoDescription p,
+.photoDescription i {
+    font-size: 14px;
+    line-height: 18px;
+    margin: 10px 2px;
+  }
+
+  .likesCount * {
+    font-weight: bold;
+  }
+
+  .footer {
+    display: none;
   }
 
   #btn-modal {
@@ -625,11 +659,6 @@ textarea {
     transform: translate(-50%, -50%);
     font-size: 18px;
     height: initial;
-  }
-
-  .profilpic {
-    width: 100px;
-    height: 100px;
   }
 
   #tags {
@@ -658,6 +687,60 @@ textarea {
     font-size: 12px;
     line-height: 16px;
     padding: 0 5px;
+  }
+
+  #viewer img,
+#viewer video {
+    width: 95%;
+    height: auto;
+  }
+  #viewer p {
+    font-size: 14px;
+    line-height: 18px;
+    margin: 5px 2.5%;
+  }
+
+  #container,
+img {
+    width: 13px;
+    height: 13px;
+  }
+
+  #flechegauche {
+    left: 15px;
+  }
+
+  #flechedroite {
+    right: 15px;
+  }
+
+  .contact-form {
+    z-index: 999;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+  .contact-form h1 {
+    width: 95%;
+    margin: 10px auto;
+    font-size: 36px;
+    line-height: 47px;
+  }
+
+  #close-modal {
+    position: fixed;
+  }
+
+  #reserve * {
+    width: 93%;
+    margin: 10px auto;
+    font-size: 24px;
+    line-height: 31px;
+  }
+
+  #btn-submit {
+    width: 170px;
+    height: 35px;
   }
 }
 
