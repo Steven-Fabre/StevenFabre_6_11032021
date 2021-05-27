@@ -66,6 +66,7 @@ fetch("./js/data.json")
         tagBtn.setAttribute(`value`, `${i.tags[tag]}`);
         tagBtn.setAttribute("class", `filters`);
         tagBtn.setAttribute("href", `#${i.tags[tag]}`);
+        tagBtn.setAttribute("title", `${i.tags[tag]}`);
         tagBtn.classList.add(`#${i.tags[tag]}`);
         tagBtn.innerHTML = `#${i.tags[tag]}`;
         nameDiv.classList.add(`${i.tags[tag]}`);

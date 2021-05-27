@@ -166,7 +166,7 @@ fetch("./js/data.json")
       `<div id="description">
       <div id="contact">
       <h1>"${currentPhotographer.name}"</h1>
-      <button id="btn-modal" class="btn-modal toggle-modal">Contactez-moi</button>
+      <button id="btn-modal" title="Contactez-moi" class="btn-modal toggle-modal">Contactez-moi</button>
       </div>
       <h3>"${currentPhotographer.city},${currentPhotographer.country}"</h3>
       <h4>"${currentPhotographer.tagline}"</h4>
@@ -174,11 +174,14 @@ fetch("./js/data.json")
       </div>
       <img class="profilpic" alt="photo de profil de ${currentPhotographer.name}" src="./img/IDPhotos/${currentPhotographer.portrait}">`
     );
+
+    // Création des boutons de tags
     for (let tag in currentPhotographer.tags) {
       let tagBtn = document.createElement("a");
       document.getElementById("tags").appendChild(tagBtn);
       tagBtn.setAttribute(`value`, `${currentPhotographer.tags[tag]}`);
       tagBtn.setAttribute("class", `filters`);
+      tagBtn.setAttribute("alt", `${currentPhotographer.tags[tag]}`);
       tagBtn.innerHTML = `#${currentPhotographer.tags[tag]}`;
     }
 

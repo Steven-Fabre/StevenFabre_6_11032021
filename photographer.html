@@ -26,7 +26,9 @@
   </head>
   <body>
     <header id="photographerHeader">
-      <a id="logo" href="index.html"><img src="img/logo.svg" alt="Logo" /></a>
+      <a id="logo" alt="retour à l'écran d'accueil" href="index.html"
+        ><img src="img/logo.svg" alt="Logo"
+      /></a>
 
       <button id="return" class="return hidden" alt="Retour à l'accueil">
         Passer au contenu
@@ -94,14 +96,21 @@
       <article id="profil"></article>
       <div id="trier">
         <label for="trier-par">Trier par</label>
-        <select name="tri" id="trier-par" onchange="check()">
-          <option value="popularite">Popularité</option>
-          <option value="date">Date</option>
-          <option value="titre">Titre</option>
+        <select
+          alt="trier les photos par ordre de"
+          name="tri"
+          id="trier-par"
+          onchange="check()"
+        >
+          <option alt="par ordre de popularité" value="popularite">
+            Popularité
+          </option>
+          <option alt="par ordre chronologique" value="date">Date</option>
+          <option alt="par ordre alphabétique" value="titre">Titre</option>
         </select>
         <img id="arrow" alt="fleche" src="img/arrow.png" />
       </div>
-      <div id="container">
+      <div aria-label="image closeup view" id="container">
         <img
           id="croixviewer"
           src="img/croixrouge.png"
