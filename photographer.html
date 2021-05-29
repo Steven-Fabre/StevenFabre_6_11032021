@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="FR">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -26,11 +26,11 @@
   </head>
   <body>
     <header id="photographerHeader">
-      <a id="logo" alt="retour à l'écran d'accueil" href="index.html"
+      <a id="logo" aria-label="retour à l'écran d'accueil" href="index.html"
         ><img src="img/logo.svg" alt="Logo"
       /></a>
 
-      <button id="return" class="return hidden" alt="Retour à l'accueil">
+      <button id="return" class="return hidden" aria-label="Retour à l'accueil">
         Passer au contenu
       </button>
     </header>
@@ -85,28 +85,27 @@
             ></textarea
             ><br />
           </div>
-          <input
-            class="btn-submit"
-            type="submit"
-            class="button"
-            value="Envoyer"
-          />
+          <input class="btn-submit button" type="submit" value="Envoyer" />
         </form>
       </div>
       <article id="profil"></article>
       <div id="trier">
         <label for="trier-par">Trier par</label>
         <select
-          alt="trier les photos par ordre de"
+          aria-label="trier les photos par ordre de"
           name="tri"
           id="trier-par"
           onchange="check()"
         >
-          <option alt="par ordre de popularité" value="popularite">
+          <option aria-label="par ordre de popularité" value="popularite">
             Popularité
           </option>
-          <option alt="par ordre chronologique" value="date">Date</option>
-          <option alt="par ordre alphabétique" value="titre">Titre</option>
+          <option aria-label="par ordre chronologique" value="date">
+            Date
+          </option>
+          <option aria-label="par ordre alphabétique" value="titre">
+            Titre
+          </option>
         </select>
         <img id="arrow" alt="fleche" src="img/arrow.png" />
       </div>
