@@ -111,7 +111,7 @@ fetch("./js/data.json")
           <div class="photoDescription">
           <p>${currentMedia.title}</p>
           <div class="likesCount" >
-          <p>${currentMedia.likes}</p>
+          <p class="numberLike">${currentMedia.likes}</p>
           <i class="fas fa-heart" aria-label="likes"></i>
           </div>
           </div>
@@ -131,9 +131,20 @@ fetch("./js/data.json")
             `<video  class="media" alt="${currentMedia.title}"  id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.video}"> <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="./img/${folderName}/${currentMedia.video}">lien de la vidéo</a> à télécharger</p></video>`
           );
         }
-
+        // On regarde le compteur pour vérifier si les photos ont déjà été likées
         if (compteur.classList.contains(`media${currentMedia.id}`)) {
           document.getElementById(`${currentMedia.id}`).classList.add("loved");
+
+          let photoLike = parseInt(
+            document
+              .getElementById(`${currentMedia.id}`)
+              .querySelector(".numberLike").innerHTML
+          );
+          photoLike++;
+          document;
+          document
+            .getElementById(`${currentMedia.id}`)
+            .querySelector(".numberLike").innerHTML = photoLike;
         }
 
         // Créer le total des likes en rajoutant à chaque itération
@@ -296,21 +307,27 @@ fetch("./js/data.json")
         );
         commandViewer(cardsArray[indexo]);
       }
+      // Ecoute du click de likes
       if (event.target.closest("div.likesCount")) {
+        let target = event.target;
         let grandParentNode =
-          event.target.closest("div.likesCount").parentNode.parentNode;
+          target.closest("div.likesCount").parentNode.parentNode;
         let mediao = cardsArray.find(
           (object) => object.id == `media${grandParentNode.id}`
         );
-        likeFunc(grandParentNode, mediao);
+        likeFunc(target, mediao);
       }
+      // Ecoute de l'application des filtres
       if (event.target.classList.contains("filters")) {
         let value = event.target.innerHTML.substr(1);
         filterChange(value);
       }
     });
   });
-let likeFunc = (grandParentNode, mediao) => {
+let likeFunc = (target, mediao) => {
+  let grandParentNode = target.closest("div.likesCount").parentNode.parentNode;
+  let photoLike = target.closest("div.likesCount").querySelector("p");
+  let photoScore = parseInt(photoLike.innerHTML);
   // Si le like est déjà actif
   if (grandParentNode.classList.contains("loved")) {
     // On ajout au compteur l'id du like
@@ -318,11 +335,16 @@ let likeFunc = (grandParentNode, mediao) => {
     grandParentNode.classList.remove("loved");
     likesTotal--;
     compteur.innerHTML = likesTotal;
+    // On enlève le like sur la photo
+    photoScore--;
+    photoLike.innerHTML = photoScore;
   } else {
     compteur.classList.add(mediao.id);
     grandParentNode.classList.add("loved");
     likesTotal++;
     compteur.innerHTML = likesTotal;
+    photoScore++;
+    photoLike.innerHTML = photoScore;
   }
 };
 

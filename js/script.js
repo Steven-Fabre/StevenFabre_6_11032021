@@ -74,7 +74,6 @@ fetch("./js/data.json")
     }
     hashChange();
   });
-
 window.onhashchange = hashChange;
 function hashChange() {
   if (window.location.hash) {
@@ -87,5 +86,11 @@ function hashChange() {
         card.classList.add("hidden");
       }
     }
+
+    document.getElementById("return").classList.remove("hidden");
   }
+}
+
+function resetFilter() {
+  location.replace("index.html");
 }

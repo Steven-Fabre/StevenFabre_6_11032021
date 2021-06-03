@@ -18,8 +18,7 @@
     />
     <link rel="stylesheet" href="style/style.css" />
     <link id="json" rel="json" href="data.json" />
-    <script src="js/script.js"></script>
-    <script type="text/javascript" src="js/scroll.js" async></script>
+    <script type="text/javascript" src="js/script.js"></script>
   </head>
   <body>
     <header>
@@ -85,7 +84,12 @@
         >
       </nav>
       <h1 id="title">Nos photographes</h1>
-      <button id="return" class="return hidden" aria-label="Retour à l'accueil">
+      <button
+        id="return"
+        onclick="resetFilter()"
+        class="return hidden"
+        aria-label="Retour à l'accueil"
+      >
         Passer au contenu
       </button>
     </header>
