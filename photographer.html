@@ -28,10 +28,14 @@
   <body>
     <header id="photographerHeader">
       <a id="logo" aria-label="retour à l'écran d'accueil" href="index.html"
-        ><img src="img/logo.svg" alt="Logo"
+        ><img src="img/logo.svg" alt="logo retour à l'écran d'accueil"
       /></a>
 
-      <button id="return" class="return hidden" aria-label="Retour à l'accueil">
+      <button
+        id="return"
+        class="return hidden"
+        aria-describedby="Retour à l'accueil"
+      >
         Passer au contenu
       </button>
     </header>
@@ -55,6 +59,7 @@
               type="text"
               id="first"
               name="first"
+              aria-label="Entrer le prénom"
             /><br />
           </div>
           <div class="formData">
@@ -64,6 +69,7 @@
               type="text"
               id="last"
               name="last"
+              aria-label="Entrer le nom"
             /><br />
           </div>
           <div class="formData">
@@ -73,6 +79,7 @@
               type="email"
               id="email"
               name="email"
+              aria-label="Entrer le mail"
             /><br />
           </div>
           <div class="formData">
@@ -83,6 +90,7 @@
               name="message"
               cols="40"
               rows="4"
+              aria-label="Entrer le message"
             ></textarea
             ><br />
           </div>
@@ -91,6 +99,7 @@
             class="btn-submit button"
             type="submit"
             value="Envoyer"
+            aria-label="Envoyer le formulaire"
           />
         </form>
       </div>

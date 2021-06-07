@@ -128,7 +128,7 @@ fetch("./js/data.json")
         if (currentMedia.video) {
           currentId.insertAdjacentHTML(
             "afterBegin",
-            `<video  class="media" alt="${currentMedia.title}"  id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.video}"> <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="./img/${folderName}/${currentMedia.video}">lien de la vidéo</a> à télécharger</p></video>`
+            `<video  class="media" title="${currentMedia.title}"  id="media${currentMedia.id}" src="./img/${folderName}/${currentMedia.video}"> <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="./img/${folderName}/${currentMedia.video}">lien de la vidéo</a> à télécharger</p></video>`
           );
         }
         // On regarde le compteur pour vérifier si les photos ont déjà été likées
