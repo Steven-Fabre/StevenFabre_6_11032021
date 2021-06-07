@@ -70,6 +70,19 @@ select {
   outline: none;
   border: none;
 }
+#arrow {
+  position: absolute;
+  top: 34px;
+  right: 25px;
+}
+
+select:focus + img {
+  transform: rotate(180deg);
+}
+
+option {
+  font-size: 20px;
+}
 
 #trier {
   position: relative;
@@ -77,12 +90,6 @@ select {
   align-items: center;
   margin: 15px 0;
   width: fit-content;
-}
-
-#arrow {
-  position: absolute;
-  top: 34px;
-  right: 25px;
 }
 
 .media {
@@ -183,7 +190,7 @@ textarea {
   margin: 10px 0 20px 0;
 }
 
-// CAROUSEL
+// CAROUSEL VIEWER
 #container {
   z-index: 999;
   position: fixed;
@@ -253,6 +260,8 @@ textarea {
     color: $first-color;
   }
 }
+
+// Compteur de likes
 
 .footer {
   position: fixed;

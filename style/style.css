@@ -154,7 +154,7 @@ nav {
   height: fit-content;
   position: fixed;
   left: 50%;
-  top: 50px;
+  top: 100px;
   transform: translate(-50%, -50%);
   font-size: 25px;
   background: #db8876;
@@ -396,18 +396,26 @@ select {
   border: none;
 }
 
+#arrow {
+  position: absolute;
+  top: 34px;
+  right: 25px;
+}
+
+select:focus + img {
+  transform: rotate(180deg);
+}
+
+option {
+  font-size: 20px;
+}
+
 #trier {
   position: relative;
   display: flex;
   align-items: center;
   margin: 15px 0;
   width: fit-content;
-}
-
-#arrow {
-  position: absolute;
-  top: 34px;
-  right: 25px;
 }
 
 .media {

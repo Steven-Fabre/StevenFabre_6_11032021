@@ -91,23 +91,25 @@
       <article id="profil"></article>
       <div id="trier">
         <label for="trier-par">Trier par</label>
-        <select
-          aria-label="trier les photos par ordre de"
-          name="tri"
-          id="trier-par"
-          onchange="check()"
-        >
-          <option aria-label="par ordre de popularité" value="popularite">
-            Popularité
-          </option>
-          <option aria-label="par ordre chronologique" value="date">
-            Date
-          </option>
-          <option aria-label="par ordre alphabétique" value="titre">
-            Titre
-          </option>
-        </select>
-        <img id="arrow" alt="fleche" src="img/arrow.png" />
+        <div class="custom-select">
+          <select
+            aria-label="trier les photos par ordre de"
+            name="tri"
+            id="trier-par"
+            onchange="check()"
+          >
+            <option aria-label="par ordre de popularité" value="popularite">
+              Popularité
+            </option>
+            <option aria-label="par ordre chronologique" value="date">
+              Date
+            </option>
+            <option aria-label="par ordre alphabétique" value="titre">
+              Titre
+            </option>
+          </select>
+          <img id="arrow" alt="fleche" src="img/arrow.png" />
+        </div>
       </div>
       <div aria-label="image closeup view" id="container">
         <img
