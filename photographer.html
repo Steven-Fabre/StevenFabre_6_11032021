@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="style/style.css" />
     <script type="text/javascript" src="js/scriptphotographer.js"></script>
     <script type="text/javascript" src="js/scroll.js" async></script>
+    <script type="text/javascript" src="js/modallistener.js" async></script>
     <link type="text/javascript" id="json" rel="json" href="js/data.json" />
   </head>
   <body>
@@ -46,7 +47,7 @@
             alt="Croix de fermeture"
           />
         </button>
-        <form id="reserve" name="reserve" action="index.html" method="get">
+        <form id="reserve" name="reserve" method="get">
           <div class="formData">
             <label>Prénom</label><br />
             <input
@@ -85,7 +86,12 @@
             ></textarea
             ><br />
           </div>
-          <input class="btn-submit button" type="submit" value="Envoyer" />
+          <input
+            id="send-modal"
+            class="btn-submit button"
+            type="submit"
+            value="Envoyer"
+          />
         </form>
       </div>
       <article id="profil"></article>
