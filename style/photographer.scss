@@ -63,7 +63,9 @@ select {
   margin: 5px;
   border-radius: 5px;
 }
-
+.custom-select {
+  position: relative;
+}
 select {
   padding: 15px;
   appearance: none;
