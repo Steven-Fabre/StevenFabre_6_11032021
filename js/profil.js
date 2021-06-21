@@ -12,8 +12,10 @@ fetch("./js/data.json")
   .then((resp) => resp.json())
   .then(function (data) {
     let id = getUrlParameter("id");
+    let factory = new MediaFactory();
     const precedent = document.getElementById("flechegauche");
     const suivant = document.getElementById("flechedroite");
+
     for (let item of data.photographers) {
       if (id == item.id) {
         let photographer = new Photographer(item);
@@ -22,7 +24,7 @@ fetch("./js/data.json")
     }
     for (let item of data.media) {
       if (id == item.photographerId) {
-        let media = new Media(item);
+        let media = factory.init(item);
         list.sortBy("likes");
         list.add(media);
         list.display("media");

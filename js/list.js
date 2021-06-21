@@ -119,18 +119,15 @@ class List {
     )}`;
   }
 
-  applyFilter(el) {
-    let filter = el.target.dataset.value;
+  addFilter(filter) {
     let buttons = document.querySelectorAll(`[data-value = ${filter}]`);
     buttons.forEach((btn) => btn.classList.toggle("filters-active"));
     if (filtersArray.includes(filter))
       filtersArray = filtersArray.filter((el) => el != filter);
     else filtersArray.push(filter);
-    this.isFilterEmpty();
-    this.showPhotographes();
   }
 
-  isFilterEmpty() {
+  ApplyFilter() {
     const allPhotographers = document.querySelectorAll(".photographerCard");
     if (filtersArray.length === 0) {
       document.getElementById("return").classList.add("hidden");

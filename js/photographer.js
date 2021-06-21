@@ -55,7 +55,7 @@ class Photographer {
   renderProfilTags() {
     let result = ``;
     for (let tag of this.tags) {
-      let balise = `<a data-value="${tag}" class="filters" href="index.html" aria-label="Accéder aux photos ${tag}"  title="${tag}">#${tag}</a>`;
+      let balise = `<a data-value="${tag}" class="filters" href="index.html?tag=${tag}" aria-label="Accéder aux photos ${tag}"  title="${tag}">#${tag}</a>`;
       result += balise;
     }
     return result;
