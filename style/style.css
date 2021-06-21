@@ -198,10 +198,6 @@ button,
   align-content: space-around;
 }
 
-.masquer {
-  display: none;
-}
-
 .photographerCard {
   margin: 40px;
   display: flex;
@@ -228,10 +224,6 @@ button,
 .photographerCard * {
   text-align: center;
 }
-.photographerCard .filters:hover {
-  filter: brightness(0.6);
-  transition: all 400ms;
-}
 .photographerCard h2 {
   color: #d3573c;
   font-size: 36px;
@@ -251,6 +243,11 @@ button,
   color: #525252;
   font-size: 9px;
   line-height: 12px;
+}
+
+.filters:hover {
+  filter: brightness(0.2);
+  transition: all 400ms;
 }
 
 .profilpic {
