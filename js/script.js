@@ -10,66 +10,35 @@ fetch("./js/data.json")
 
     for (let i of photographersArray) {
       let resultDiv = document.getElementById("resultDiv");
-
-      //Fonction générique de création de contenu à partir des objets JSON
-      function insertElement(elementType, innerContent, parentDiv) {
-        let el = document.createElement(elementType);
-        el.innerHTML = innerContent;
-        parentDiv.appendChild(el);
-      }
-      // Fonction générique de création de carte à partir des objets JSON
-      function createDiv(
-        elementType,
-        innerAttClass,
-        innerAttContent,
-        idName,
-        parentDiv
-      ) {
-        let element = document.createElement(elementType);
-        element.setAttribute(innerAttClass, innerAttContent);
-        element.setAttribute("id", idName);
-        parentDiv.appendChild(element);
-      }
-      //Crée une Div avec le nom du photographe
-      createDiv(
-        "article",
-        "class",
-        `photographerCard mediaCard`,
-        `${i.name}`,
-        resultDiv
+      resultDiv.insertAdjacentHTML(
+        "beforeend",
+        `<article id="${i.name}" class ="photographerCard mediaCard ">
+          <a href="photographer.html#${i.id}">
+          <img class="profilpic" alt="${i.name}" src="./img/IDPhotos/${i.portrait}">
+          <h2>${i.name}</h2>
+          </a>
+          <p>${i.city}, ${i.country}</p>
+          <p>${i.tagline}</p>
+          <p>${i.price}€/jour</p>
+          </article>`
       );
-      let nameDiv = document.getElementById(i.name);
-      let name = document.createElement("h2");
-      name.innerHTML = `${i.name}`;
-      // Création du profil cliquable
-      let link = document.createElement("a");
-      nameDiv.appendChild(link);
-      link.href = `photographer.html#${i.id}`;
-      link.appendChild(name);
-      name.insertAdjacentHTML(
-        "beforebegin",
-        `<img class="profilpic" alt="${i.name}" src="./img/IDPhotos/${i.portrait}">`
-      );
-      // Création de la localisation
-      insertElement("p", `${i.city}, ${i.country}`, nameDiv);
-      // Création de la tagline
-      insertElement("p", `${i.tagline}`, nameDiv);
-      // Création du prix
-      insertElement("p", `${i.price}€/jour`, nameDiv);
 
       // Création des tags
-      createDiv("div", "class", `tags`, `${i.id}`, nameDiv);
+      document
+        .getElementById(`${i.name}`)
+        .insertAdjacentHTML(
+          "beforeend",
+          `<div class="tags" id="${i.id}"></div>`
+        );
+
       for (let tag in i.tags) {
-        let tagBtn = document.createElement("a");
         let tagDiv = document.getElementById(i.id);
-        tagDiv.appendChild(tagBtn);
-        tagBtn.setAttribute(`value`, `${i.tags[tag]}`);
-        tagBtn.setAttribute("class", `filters`);
-        tagBtn.setAttribute("href", `#${i.tags[tag]}`);
-        tagBtn.setAttribute("title", `${i.tags[tag]}`);
-        tagBtn.classList.add(`#${i.tags[tag]}`);
-        tagBtn.innerHTML = `#${i.tags[tag]}`;
-        nameDiv.classList.add(`${i.tags[tag]}`);
+        let nameArticle = document.getElementById(`${i.name}`);
+        nameArticle.classList.add(`${i.tags[tag]}`);
+        tagDiv.insertAdjacentHTML(
+          "beforeend",
+          `<a value=${i.tags[tag]} class="filters #${i.tags[tag]}" href="#${i.tags[tag]}" title="${i.tags[tag]}">#${i.tags[tag]}</a>`
+        );
       }
     }
     hashChange();

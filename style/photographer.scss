@@ -63,23 +63,20 @@ select {
   margin: 5px;
   border-radius: 5px;
 }
-.custom-select {
-  position: relative;
-}
 select {
   padding: 15px;
   appearance: none;
   outline: none;
   border: none;
 }
+
+select:focus {
+  outline: 2px solid black;
+}
 #arrow {
   position: absolute;
   top: 34px;
   right: 25px;
-}
-
-select:focus + img {
-  transform: rotate(180deg);
 }
 
 option {
@@ -109,7 +106,7 @@ option {
   cursor: pointer;
 }
 
-#photo {
+#media {
   display: flex;
   flex-wrap: wrap;
 }

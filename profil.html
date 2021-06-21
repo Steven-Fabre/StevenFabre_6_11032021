@@ -20,9 +20,12 @@
       crossorigin="anonymous"
     ></script>
     <link rel="stylesheet" href="style/style.css" />
-    <script type="text/javascript" src="js/scriptphotographer.js"></script>
-    <script type="text/javascript" src="js/scroll.js" async></script>
-    <script type="text/javascript" src="js/modallistener.js" async></script>
+    <script type="text/javascript" src="js/filters.js"></script>
+    <script type="text/javascript" src="js/list.js"></script>
+    <script type="text/javascript" src="js/profil.js"></script>
+    <script type="text/javascript" src="js/media.js"></script>
+    <script type="text/javascript" src="js/photographer.js"></script>
+
     <link type="text/javascript" id="json" rel="json" href="js/data.json" />
   </head>
   <body>
@@ -42,7 +45,7 @@
     <main>
       <div id="modal" class="contact-form hidden">
         <h1>Contactez-moi</h1>
-        <h1 class="modalname"></h1>
+        <h1 id="modalname"></h1>
         <button class="toggle-modal" id="close-modal">
           <img
             id="croix"
@@ -111,20 +114,28 @@
             aria-label="trier les photos par ordre de"
             name="tri"
             id="trier-par"
-            onchange="check()"
+            onclick="if (typeof(this.selectedIndex) != 'undefined') checkSelect(this.selectedIndex)"
           >
-            <option aria-label="par ordre de popularité" value="popularite">
+            <option aria-label="par ordre de popularité" value="likes">
               Popularité
             </option>
             <option aria-label="par ordre chronologique" value="date">
               Date
             </option>
-            <option aria-label="par ordre alphabétique" value="titre">
+            <option aria-label="par ordre alphabétique" value="title">
               Titre
             </option>
           </select>
           <img id="arrow" alt="fleche" src="img/arrow.png" />
         </div>
+      </div>
+      <article id="media"></article>
+      <div class="footer">
+        <div>
+          <p id="compteur"></p>
+          <p><i class="fas fa-heart" aria-label="likes"></i></p>
+        </div>
+        <p id="photographerPrice"></p>
       </div>
       <div aria-label="image closeup view" id="container">
         <img
@@ -143,14 +154,6 @@
           alt="image suivante"
         />
         <div id="viewer"></div>
-      </div>
-      <article id="photo"></article>
-      <div class="footer">
-        <div>
-          <p id="compteur"></p>
-          <p><i class="fas fa-heart" aria-label="likes"></i></p>
-        </div>
-        <p id="photographerPrice"></p>
       </div>
     </main>
   </body>

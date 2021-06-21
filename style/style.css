@@ -180,13 +180,8 @@ button,
   text-decoration: none;
   font-size: 12px;
 }
-button:hover, button:focus,
-.btn-modal:hover,
-.btn-submit:hover,
-.btn-modal:focus,
-.btn-submit:focus,
-.filters:hover,
-.filters:focus {
+
+.filters-active {
   color: #fafafa;
   background: #911c1c;
 }
@@ -196,7 +191,7 @@ button:hover, button:focus,
   font-size: 36px;
 }
 
-#resultDiv {
+#photographe {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -211,7 +206,7 @@ button:hover, button:focus,
   margin: 40px;
   display: flex;
   flex-direction: column;
-  min-width: 400px;
+  min-width: 370px;
   max-width: 500px;
   opacity: 1;
   -webkit-transition: opacity 0.4s ease-in;
@@ -232,6 +227,10 @@ button:hover, button:focus,
 }
 .photographerCard * {
   text-align: center;
+}
+.photographerCard .filters:hover {
+  filter: brightness(0.6);
+  transition: all 400ms;
 }
 .photographerCard h2 {
   color: #d3573c;
@@ -389,10 +388,6 @@ select {
   border-radius: 5px;
 }
 
-.custom-select {
-  position: relative;
-}
-
 select {
   padding: 15px;
   appearance: none;
@@ -400,14 +395,14 @@ select {
   border: none;
 }
 
+select:focus {
+  outline: 2px solid black;
+}
+
 #arrow {
   position: absolute;
   top: 34px;
   right: 25px;
-}
-
-select:focus + img {
-  transform: rotate(180deg);
 }
 
 option {
@@ -437,7 +432,7 @@ option {
   cursor: pointer;
 }
 
-#photo {
+#media {
   display: flex;
   flex-wrap: wrap;
 }

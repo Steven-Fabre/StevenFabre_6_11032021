@@ -18,69 +18,24 @@
     />
     <link rel="stylesheet" href="style/style.css" />
     <link id="json" rel="json" href="data.json" />
-    <script type="text/javascript" src="js/script.js"></script>
+    <script type="text/javascript" src="js/filters.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/photographer.js"></script>
+    <script type="text/javascript" src="js/list.js"></script>
   </head>
   <body>
     <header>
       <a id="logo" href="index.html"
         ><img src="img/logo.svg" alt="FishEye Home Page"
       /></a>
-      <nav aria-label="photographer categories" class="categories">
-        <a aria-label="Accéder aux portraits" href="#portrait" class="filters"
-          >#portrait</a
-        >
-        <a href="#art" aria-label="Accéder aux photos d'art" class="filters"
-          >#art</a
-        >
-        <a
-          href="#fashion"
-          aria-label="Accéder aux photos fashion"
-          class="filters"
-          >#fashion</a
-        >
-        <a
-          href="#architecture"
-          aria-label="Accéder aux photos d'architecture"
-          class="filters"
-          >#architecture</a
-        >
-        <a
-          href="#travel"
-          aria-label="Accéder aux photos de voyage"
-          class="filters"
-          >#travel</a
-        >
-        <a
-          href="#sport"
-          aria-label="Accéder aux photos de sport"
-          class="filters"
-          >#sport</a
-        >
-        <a
-          href="#animals"
-          aria-label="Accéder aux photos d'animaux"
-          class="filters"
-          >#animals</a
-        >
-        <a
-          href="#events"
-          aria-label="Accéder aux photos d'événements"
-          class="filters"
-          >#events</a
-        >
-      </nav>
+      <nav aria-label="photographer categories" id="categories"></nav>
       <h1 id="title">Nos photographes</h1>
-      <button
-        id="return"
-        onclick="resetFilter()"
-        class="return hidden"
-        aria-label="Retour à l'accueil"
-      >
+      <button id="return" class="return hidden" aria-label="Retour à l'accueil">
         Passer au contenu
       </button>
     </header>
     <main>
-      <div id="resultDiv"></div>
+      <div id="photographe"></div>
     </main>
   </body>
 </html>
