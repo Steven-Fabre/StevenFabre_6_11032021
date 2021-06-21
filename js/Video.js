@@ -29,4 +29,17 @@ class Video {
         </div>
     </div>`;
   }
+
+  renderViewer(media) {
+    return `<video src="./img/${getUrlParameter("name")}/${media.video}" id="${
+      media.id
+    }"  controls="controls">
+    <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="./img/${getUrlParameter(
+      "name"
+    )}/${media.video}">lien de la vidéo</a> à télécharger</p>
+      <source id='mp4Source' src="movie.mp4" type="video/mp4" />
+      <source id='oggSource' src="movie.ogg" type="video/ogg" />
+      </video>
+      <p>${media.title}</p>`;
+  }
 }

@@ -25,4 +25,11 @@ class Image {
           </div>
       </div>`;
   }
+
+  renderViewer(media) {
+    return `<img src="./img/${getUrlParameter("name")}/${media.image}" id=${
+      media.id
+    } alt=${media.title}>
+      <p>${media.title}</p`;
+  }
 }

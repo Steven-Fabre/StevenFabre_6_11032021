@@ -51,37 +51,13 @@ class List {
   };
 
   commandViewer(media) {
-    // ENLEVER L'image du viewer si il y en a une
     lastIndex = this.all.length - 1;
     let viewer = document.getElementById("viewer");
     while (viewer.firstChild) {
       viewer.removeChild(viewer.firstChild);
     }
     container.classList.add("active");
-    if (media.image) {
-      viewer.insertAdjacentHTML(
-        "beforeend",
-        `<img src="./img/${getUrlParameter("name")}/${media.image}" id=${
-          media.id
-        } alt=${media.title}>
-        <p>${media.title}</p>`
-      );
-    }
-    if (media.video) {
-      viewer.insertAdjacentHTML(
-        "beforeend",
-        `<video src="./img/${getUrlParameter("name")}/${media.video}" id="${
-          media.id
-        }"  controls="controls">
-        <p>Votre navigateur ne supporte pas la lecture du média, voici à la place un <a href="./img/${getUrlParameter(
-          "name"
-        )}/${media.video}">lien de la vidéo</a> à télécharger</p>
-          <source id='mp4Source' src="movie.mp4" type="video/mp4" />
-          <source id='oggSource' src="movie.ogg" type="video/ogg" />
-          </video>
-          <p>${media.title}</p>`
-      );
-    }
+    viewer.insertAdjacentHTML("beforeend", media.renderViewer(media));
   }
 
   likeFunc(allMedias, media, likeCount) {
@@ -108,7 +84,7 @@ class List {
     for (let photographe of this.all) {
       let html = ``;
       for (let tag of photographe.tags) {
-        let balise = `<a data-value="${tag}" class="filters" aria-label="Accéder aux photos ${tag}"  title="${tag}">#${tag}</a>`;
+        let balise = `<a data-value="${tag}" tabindex="0" class="filters" aria-label="Accéder aux photos ${tag}"  title="${tag}">#${tag}</a>`;
         this.tags.add(balise);
         html += balise;
       }

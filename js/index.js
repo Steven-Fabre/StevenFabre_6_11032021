@@ -31,3 +31,7 @@ fetch("./js/data.json")
         .forEach((btn) => btn.classList.remove("filters-active"));
     });
   });
+
+document.addEventListener("keydown", (e) => {
+  if (e.code == "Enter") e.target.click();
+});
