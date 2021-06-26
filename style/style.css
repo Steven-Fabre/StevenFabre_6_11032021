@@ -196,6 +196,8 @@ button,
   flex-wrap: wrap;
   justify-content: center;
   align-content: space-around;
+  max-width: 1440px;
+  margin: auto;
 }
 
 .photographerCard {

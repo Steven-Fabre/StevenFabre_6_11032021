@@ -23,7 +23,9 @@ class Video {
         <div class="photoDescription">
             <p>${this.title}</p>
             <div tabindex="0" class="likesCount">
-                <p class="numberLike">${this.likes}</p>
+                <p class="numberLike" aria-label="${this.likes} likes">${
+      this.likes
+    }</p>
                 <i class="fas fa-heart" aria-label="likes" aria-hidden="true"></i>
             </div>
         </div>
